@@ -1,0 +1,6 @@
+/tmp
+.kitchen/
+Gemfile.lock
+Berksfile.lock
+.kitchen.local.yml
+.rvmrc

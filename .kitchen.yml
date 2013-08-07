@@ -1,0 +1,48 @@
+---
+driver_plugin: vagrant
+
+platforms:
+
+- name: ubuntu-12.04
+  driver_config:
+    box: canonical-ubuntu-12.04
+    box_url: http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box
+    require_chef_omnibus: true
+    customize:
+      memory:    1024
+    run_list:
+      - recipe[apt]
+
+# TODO: rpm-64-bit is not yet supported
+#- name: centos-6.3
+#  driver_config:
+#    box: opscode-centos-6.3
+#    box_url: http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.3_chef-11.2.0.box
+#    customize:
+#      memory:    1024
+#    run_list:
+#      - recipe[yum]
+
+suites:
+
+- name: temp
+  run_list:
+    - recipe[git]
+    #- recipe[maven]     error in community cookbook... :(
+    - recipe[android-sdk]
+  attributes:
+#    maven:
+#      version: 3
+    android-sdk:
+      owner: vagrant
+      group: vagrant
+
+- name: default
+  run_list:
+    - recipe[java]
+    - recipe[android-sdk]
+  attributes:
+    #TODO make the setup works when files are owned/installed by root.root (or other default values)
+    # android-sdk:
+    #   owner: vagrant
+    #   group: vagrant

@@ -28,6 +28,16 @@ include_recipe "java"
 android_home     = File.join(node['ark']['prefix_home'], node['android-sdk']['name'])
 android_bin      = File.join(android_home, 'tools', 'android')
 
+#
+# Install required libraries
+#
+if (node['platform'] == 'ubuntu')
+  package 'libgl1-mesa-dev'
+end
+
+#
+# Install required 32-bit libraries on 64-bit platforms
+#
 if (node['os'] == 'linux' && node['kernel']['machine'] != 'i686')
   if (node['platform'] == 'ubuntu')
     #TODO should check it is an ubuntu 11.10+
@@ -38,6 +48,9 @@ if (node['os'] == 'linux' && node['kernel']['machine'] != 'i686')
   end
 end
 
+#
+# Download and setup android-sdk tarball package
+#
 ark node['android-sdk']['name'] do
   url       node['android-sdk']['download_url']
   checksum  node['android-sdk']['checksum']

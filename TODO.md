@@ -83,8 +83,6 @@ org.apache.maven.plugin.MojoExecutionException: No Android SDK path could be fou
 
 --------
 
-make the setup works when files are owned/installed by root.root (or other default values)
-
 Fix Gemfile conflict, see https://github.com/miketheman/knife-community/issues/15#issuecomment-22252568
 
 publish to community site

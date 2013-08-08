@@ -1,7 +1,8 @@
 default['android-sdk']['name']           = 'android-sdk'
-
 default['android-sdk']['owner']          = 'root'
 default['android-sdk']['group']          = 'root'
+default['android-sdk']['setup_root']     = nil		# ark defaults (/usr/local) is used if this attribute is not defined
+
 
 # # Last version without License Agreement being prompted during setup:
 # default['android-sdk']['version']        = '21.1'

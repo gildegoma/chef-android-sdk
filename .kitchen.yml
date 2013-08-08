@@ -38,11 +38,4 @@ suites:
       group: vagrant
 
 - name: default
-  run_list:
-    - recipe[java]
-    - recipe[android-sdk]
-  attributes:
-    #TODO make the setup works when files are owned/installed by root.root (or other default values)
-    # android-sdk:
-    #   owner: vagrant
-    #   group: vagrant
+  run_list: recipe[android-sdk]

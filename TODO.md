@@ -1,7 +1,19 @@
+emulator: WARNING: Could not initialize OpenglES emulation, using software renderer.
+maybe no need to fix (same warning on https://travis-ci.org/embarkmobile/android-maven-example)
+
+---
+
+Part 1 - Be able to build https://travis-ci.org/embarkmobile/android-maven-example on vagrant box
+
+
+What is "very" interesting, is that the error is the same as random (occured only once) found here
+https://travis-ci.org/embarkmobile/android-maven-example/jobs/9867824
 
 --------
 
-Be able to build https://travis-ci.org/embarkmobile/android-maven-example on vagrant box
+-Dandroid.sdk.path=$ANDROID_HOME
+
+Part 2 - Be able to build https://travis-ci.org/embarkmobile/android-maven-example on vagrant box
 
 vagrant@temp-ubuntu-1204:~/tests/android-maven-example$ mvn install -Pintegration-tests -Dandroid.device=test
 [INFO] Scanning for projects...
@@ -104,4 +116,6 @@ Add chefspec examples
 
 Try to upgrade Berkshelf dependency
 
+Try to take advantage of `append_env_path` ark option
 
+Finalize travis-solo and validate this cookbook with android-maven-example in a TK suite

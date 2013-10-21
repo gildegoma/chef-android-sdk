@@ -1,3 +1,4 @@
+
 emulator: WARNING: Could not initialize OpenglES emulation, using software renderer.
 maybe no need to fix (same warning on https://travis-ci.org/embarkmobile/android-maven-example)
 
@@ -97,8 +98,6 @@ org.apache.maven.plugin.MojoExecutionException: No Android SDK path could be fou
 
 Fix Gemfile conflict, see https://github.com/miketheman/knife-community/issues/15#issuecomment-22252568
 
-publish to community site
-
 Remove this TODO list and create equivalent GitHub issues !!!
 
 Remove all #TODO comments in source code and create equivalent GitHub issues !!!
@@ -106,11 +105,9 @@ Remove all #TODO comments in source code and create equivalent GitHub issues !!!
 Improve test-kitche suites with inspiration from examples like:
  * https://github.com/opscode-cookbooks/maven/blob/master/.kitchen.yml
 
-Add more 64-bit linuxes
+Add more linuxes
 
 Support Mac, Windows
-
-Better handle Android License agreements prompt. See https://github.com/travis-ci/travis-cookbooks/pull/153#issuecomment-22078355
 
 Add chefspec examples
 
@@ -119,3 +116,4 @@ Try to upgrade Berkshelf dependency
 Try to take advantage of `append_env_path` ark option
 
 Finalize travis-solo and validate this cookbook with android-maven-example in a TK suite
+

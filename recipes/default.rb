@@ -96,14 +96,27 @@ template "/etc/profile.d/#{node['android-sdk']['name']}.sh"  do
   )
 end
 
+package 'expect'
+
 #
 # Update and Install Android components
 #
-execute 'Install Android SDK platforms and tools' do
+script 'Install Android SDK platforms and tools' do
+  interpreter   'expect'
   environment   ({ 'ANDROID_HOME' => android_home })
   path          [File.join(android_home, 'tools')]
-  #TODO: use --force or not?
-  command       "echo y | #{android_bin} update sdk --no-ui --filter #{node['android-sdk']['components'].join(',')}"
   user          node['android-sdk']['owner']
   group         node['android-sdk']['group']
+  #TODO: use --force or not?
+  code <<-EOF
+    spawn #{android_bin} update sdk --no-ui --filter #{node['android-sdk']['components'].join(',')}
+    set timeout 1800
+    expect {
+      "Do you accept the license" {
+            exp_send "y\r"
+            exp_continue
+      }
+      eof
+    }
+  EOF
 end

@@ -32,4 +32,3 @@ default['android-sdk']['components']     = %w(platform-tools
                                               extra-google-google_play_services
                                               extra-google-m2repository
                                               extra-android-m2repository)
-

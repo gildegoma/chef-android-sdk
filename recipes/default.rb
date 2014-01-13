@@ -119,4 +119,5 @@ script 'Install Android SDK platforms and tools' do
       eof
     }
   EOF
+  not_if { File.exist?("#{setup_root}/#{node['android-sdk']['name']}-#{node['android-sdk']['version']}") }
 end

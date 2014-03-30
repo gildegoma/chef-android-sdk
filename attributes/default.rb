@@ -3,8 +3,8 @@ default['android-sdk']['owner']          = 'root'
 default['android-sdk']['group']          = 'root'
 default['android-sdk']['setup_root']     = nil  # ark defaults (/usr/local) is used if this attribute is not defined
 
-default['android-sdk']['version']        = '22.3'
-default['android-sdk']['checksum']       = '4077575c98075480e0156c10e48a1521e31c7952768271a206870e6813057f4f'
+default['android-sdk']['version']        = '22.6.2'
+default['android-sdk']['checksum']       = 'f87e1bb207783a8b7d59775dcd3a8a2828034787860e44c99a9aefebdf7cb28f'
 
 default['android-sdk']['download_url']   = "http://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-linux.tgz"
 

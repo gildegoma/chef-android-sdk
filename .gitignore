@@ -1,6 +1,10 @@
 /tmp
 .kitchen/
+.vagrant/
 Gemfile.lock
 Berksfile.lock
+Vagrantfile
 .kitchen.local.yml
 .rvmrc
+.rspec
+

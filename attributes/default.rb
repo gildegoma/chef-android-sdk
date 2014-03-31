@@ -10,10 +10,12 @@ default['android-sdk']['download_url']   = "http://dl.google.com/android/android
 
 #
 # List of Android SDK components to preinstall:
-# Selection based on official usage statistics (see http://developer.android.com/about/dashboards/index.html) 
+# Selection based on 
+# - Platform usage statistics (see http://developer.android.com/about/dashboards/index.html) 
+# - Build Tools releases: http://developer.android.com/tools/revisions/build-tools.html
 #
 default['android-sdk']['components']     = %w(platform-tools
-                                              build-tools-19.0.0
+                                              build-tools-19.0.3
                                               android-19
                                               sysimg-19
                                               android-18
@@ -24,10 +26,7 @@ default['android-sdk']['components']     = %w(platform-tools
                                               sysimg-16
                                               android-15
                                               sysimg-15
-                                              android-14
-                                              sysimg-14
                                               android-10
-                                              android-8
                                               extra-android-support
                                               extra-google-google_play_services
                                               extra-google-m2repository

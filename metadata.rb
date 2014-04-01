@@ -14,3 +14,4 @@ supports 'ubuntu', '>= 12.04'
 # Watch https://github.com/gildegoma/chef-android-sdk/issues/5
 
 recipe "android-sdk", "Install and update Google Android SDK"
+

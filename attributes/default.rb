@@ -38,3 +38,7 @@ default['android-sdk']['components']     = %w(platform-tools
 default['android-sdk']['license']['white_list']     = %w(android-sdk-license-.+ intel-.+)
 default['android-sdk']['license']['black_list']     = []    # e.g. ['mips-.+', 'android-wear-sdk-license-.+']
 default['android-sdk']['license']['default_answer'] = 'n'   # 'y' or 'n' ('yes' or 'no')
+
+default['android-sdk']['script_addons']['path']     = '/usr/local/bin'
+default['android-sdk']['script_addons']['owner']    = node['android-sdk']['owner']
+default['android-sdk']['script_addons']['group']    = node['android-sdk']['group']

@@ -142,13 +142,14 @@ end
 
 
 #
-# Deploy additional scripts into Android-SDK tools directory
+# Deploy additional scripts, preferably outside Android-SDK own directories to
+# avoid unwanted removal when updating android sdk components later.
 #
 %w(android-update-sdk android-accept-licenses).each do |android_helper_script|
-  cookbook_file File.join(android_home, 'tools', android_helper_script) do
+  cookbook_file File.join(node['android-sdk']['script_addons']['path'], android_helper_script) do
     source android_helper_script
-    owner  node['android-sdk']['owner']
-    group  node['android-sdk']['group']
-    mode   0775
+    owner  node['android-sdk']['script_addons']['owner']
+    group  node['android-sdk']['script_addons']['group']
+    mode   0755
   end
 end

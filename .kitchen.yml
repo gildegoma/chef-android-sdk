@@ -3,39 +3,58 @@ driver_plugin: vagrant
 
 platforms:
 
-- name: ubuntu-12.04
+- name: ubuntu-trusty
   driver_config:
-    box: canonical-ubuntu-12.04
-    box_url: http://cloud-images.ubuntu.com/vagrant/precise/current/precise-server-cloudimg-amd64-vagrant-disk1.box
+    box: 'ubuntu/trusty64'
     require_chef_omnibus: true
     customize:
-      memory:    1024
+      memory: 384
     run_list:
       - recipe[apt]
 
-# TODO: rpm-64-bit is not yet supported
-#- name: centos-6.3
-#  driver_config:
-#    box: opscode-centos-6.3
-#    box_url: http://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.3_chef-11.2.0.box
-#    customize:
-#      memory:    1024
-#    run_list:
-#      - recipe[yum]
+- name: ubuntu-precise
+  driver_config:
+    box: 'ubuntu/precise64'
+    require_chef_omnibus: true
+    customize:
+      memory: 512
+    run_list:
+      - recipe[apt]
+
+- name: centos-6.4
+  driver_config:
+    box: opscode-centos-6.4
+    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
+    require_chef_omnibus: true
+    customize:
+      memory: 512
+    run_list:
+      - recipe[yum]
 
 suites:
 
-- name: temp
+- name: wip # be prepared to work on https://github.com/gildegoma/chef-android-sdk/issues/14 (maven-android-sdk-deployer)
   run_list:
     - recipe[git]
-    #- recipe[maven]     error in community cookbook... :(
+    - recipe[maven]
     - recipe[android-sdk]
   attributes:
-#    maven:
-#      version: 3
     android-sdk:
       owner: vagrant
       group: vagrant
+    components:
+      - build-tools-19.0.3
+      - android-19
+      - sysimg-19
+    java:
+      jdk_version: 7
 
 - name: default
-  run_list: recipe[android-sdk]
+  run_list:
+    - recipe[android-sdk]
+  attributes:
+    java:
+      jdk_version: 7
+    android-sdk:
+      components:
+        - build-tools-19.0.1

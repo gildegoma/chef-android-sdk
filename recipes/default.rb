@@ -146,10 +146,15 @@ end
 # avoid unwanted removal when updating android sdk components later.
 #
 %w(android-update-sdk android-accept-licenses).each do |android_helper_script|
-  cookbook_file File.join(node['android-sdk']['script_addons']['path'], android_helper_script) do
+  cookbook_file File.join(node['android-sdk']['scripts']['path'], android_helper_script) do
     source android_helper_script
-    owner  node['android-sdk']['script_addons']['owner']
-    group  node['android-sdk']['script_addons']['group']
+    owner  node['android-sdk']['scripts']['owner']
+    group  node['android-sdk']['scripts']['group']
     mode   0755
   end
 end
+
+#
+# Install Maven Android SDK Deployer toolkit to populate local Maven repository
+#
+include_recipe('android-sdk::maven-rescue') if node['android-sdk']['maven-rescue']

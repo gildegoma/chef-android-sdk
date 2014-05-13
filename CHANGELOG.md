@@ -4,6 +4,7 @@ CHANGELOG for Android-SDK cookbook
 v0.2.0 (upcoming)
 -------------------
 
+- Optionally install Maven Android SDK Deployer [GH-14]
 - Deploy scripts for non-interactive SDK setup/updates [GH-13]
 
 v0.1.1 (2014-04-01)

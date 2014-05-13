@@ -25,20 +25,23 @@ Vagrant.configure("2") do |config|
   #
   config.vm.provision :chef_solo do |chef|
 
+    #chef.log_level = 'debug'
+
     chef.add_recipe 'apt'
+    chef.add_recipe 'git'
+    chef.add_recipe 'maven'
 
     chef.add_recipe 'android-sdk'
 
     chef.json = {
-      "apt" => {
-        "mirror" => 'ch'
-      },
       "java" => {
         "jdk_version" => '7'
       },
       "android-sdk" => {
         "owner" => 'vagrant',
-        "group" => 'vagrant'
+        "group" => 'vagrant',
+        "maven-rescue" => true,
+        "maven-local-repository" => '/home/vagrant/.m2/repository'
       },
     }
   end

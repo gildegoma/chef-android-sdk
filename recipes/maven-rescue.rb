@@ -50,16 +50,20 @@ node['android-sdk']['components'].each do |sdk_component|
   end
 end
 
-execute 'Execute maven-android-sdk-deployer' do
-  command       "mvn clean install -pl #{components.join(",")} -Dmaven.repo.local=#{node['android-sdk']['maven-local-repository']} --fail-never -B"
-  user          node['android-sdk']['owner']
-  group         node['android-sdk']['group']
-  cwd           maven_android_sdk_deployer_home
+# only run maven-android-sdk-deployer when targets are defined
+if components.length > 0
 
-  # FIXME: setting HOME might be required (if $HOME used in node['android-sdk']['maven-local-repository'],
-  #        or if -Dmaven.repo.local is unset (default to ~/.m2/repository)
-  # environment   ({ 'HOME' => '/home/vagrant' })
+  execute 'Execute maven-android-sdk-deployer' do
+    command       "mvn clean install -pl #{components.join(",")} -Dmaven.repo.local=#{node['android-sdk']['maven-local-repository']} --fail-never -B"
+    user          node['android-sdk']['owner']
+    group         node['android-sdk']['group']
+    cwd           maven_android_sdk_deployer_home
 
-  # Note: There is no idempotent guard for now. Pending on https://github.com/gildegoma/chef-android-sdk/issues/12.
+    # FIXME: setting HOME might be required (if $HOME used in node['android-sdk']['maven-local-repository'],
+    #        or if -Dmaven.repo.local is unset (default to ~/.m2/repository)
+    # environment   ({ 'HOME' => '/home/vagrant' })
+
+    # Note: There is no idempotent guard for now. Pending on https://github.com/gildegoma/chef-android-sdk/issues/12.
+  end
 end
 

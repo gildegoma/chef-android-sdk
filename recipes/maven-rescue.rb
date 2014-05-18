@@ -36,17 +36,14 @@ node['android-sdk']['components'].each do |sdk_component|
   if sdk_component =~ /android-[0-9]+/
     components << sdk_component.sub("android", "platforms/android")
   # android and GDK addon APIs
-  else if sdk_component =~ /addon-google_(apis|gdk)-google-[0-9]+/
-      components << sdk_component.sub("addon-google_", "add-ons/google-").sub("-google","")
-    # m2 repositories
-    else if sdk_component =~ /extra-(google|android)-m2repository/
-        components << sdk_component.sub("extra-", "repositories/")
-      # extras
-      else if sdk_component =~ /extra-google-+/
-          components << sdk_component.sub("extra-google-", "extras/").gsub("_","-")
-        end
-      end
-    end
+  elsif sdk_component =~ /addon-google_(apis|gdk)-google-[0-9]+/
+    components << sdk_component.sub("addon-google_", "add-ons/google-").sub("-google","")
+  # m2 repositories
+  elsif sdk_component =~ /extra-(google|android)-m2repository/
+    components << sdk_component.sub("extra-", "repositories/")
+  # extras
+  elsif sdk_component =~ /extra-google-+/
+    components << sdk_component.sub("extra-google-", "extras/").gsub("_","-")
   end
 end
 

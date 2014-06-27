@@ -4,6 +4,7 @@ CHANGELOG for Android-SDK cookbook
 v0.2.0 (upcoming)
 -------------------
 
+- Integrate by default with Android SDK 23.0.0
 - Optionally install Maven Android SDK Deployer [GH-14]
 - Deploy scripts for non-interactive SDK setup/updates [GH-13]
 

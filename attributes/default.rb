@@ -3,8 +3,8 @@ default['android-sdk']['owner']          = 'root'
 default['android-sdk']['group']          = 'root'
 default['android-sdk']['setup_root']     = nil  # ark defaults (/usr/local) is used if this attribute is not defined
 
-default['android-sdk']['version']        = '22.6.2'
-default['android-sdk']['checksum']       = 'f87e1bb207783a8b7d59775dcd3a8a2828034787860e44c99a9aefebdf7cb28f'
+default['android-sdk']['version']        = '23'
+default['android-sdk']['checksum']       = '2eaab06852ac21b6c79df73c07a667c5da5be57f7ffcbd4f17aef7efeea22ac1'
 default['android-sdk']['download_url']   = "http://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-linux.tgz"
 
 #
@@ -18,7 +18,8 @@ default['android-sdk']['download_url']   = "http://dl.google.com/android/android
 # without having to adapt 'version' and 'checksum' attributes of this cookbook.
 # Note that it will require (waste) some extra download effort.
 default['android-sdk']['components']     = %w(platform-tools
-                                              build-tools-19.1.0
+                                              build-tools-20.0.0
+                                              android-20
                                               android-19
                                               sysimg-19
                                               android-18

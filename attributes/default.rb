@@ -20,28 +20,30 @@ default['android-sdk']['download_url']   = "http://dl.google.com/android/android
 default['android-sdk']['components']     = %w(platform-tools
                                               build-tools-20.0.0
                                               android-20
+                                              sys-img-armeabi-v7a-android-wear-20
+                                              sys-img-armeabi-v7a-android-l
                                               android-19
-                                              sysimg-19
+                                              sys-img-armeabi-v7a-android-19
                                               android-18
-                                              sysimg-18
+                                              sys-img-armeabi-v7a-android-18
                                               android-17
-                                              sysimg-17
+                                              sys-img-armeabi-v7a-android-17
                                               android-16
-                                              sysimg-16
+                                              sys-img-armeabi-v7a-android-16
                                               android-15
-                                              sysimg-15
+                                              sys-img-armeabi-v7a-android-15
                                               android-10
                                               extra-android-support
                                               extra-google-google_play_services
                                               extra-google-m2repository
                                               extra-android-m2repository)
 
-default['android-sdk']['license']['white_list']     = %w(android-sdk-license-\w+ intel-.+)
+default['android-sdk']['license']['white_list']     = %w(android-sdk-license-.+ intel-.+)
 default['android-sdk']['license']['black_list']     = []    # e.g. ['mips-.+', 'android-wear-sdk-license-.+']
 default['android-sdk']['license']['default_answer'] = 'n'   # 'y' or 'n' ('yes' or 'no')
 
-default['android-sdk']['scripts']['path']          = '/usr/local/bin'
-default['android-sdk']['scripts']['owner']         = node['android-sdk']['owner']
-default['android-sdk']['scripts']['group']         = node['android-sdk']['group']
+default['android-sdk']['scripts']['path']           = '/usr/local/bin'
+default['android-sdk']['scripts']['owner']          = node['android-sdk']['owner']
+default['android-sdk']['scripts']['group']          = node['android-sdk']['group']
 
-default['android-sdk']['maven-rescue']             = false
+default['android-sdk']['maven-rescue']              = false

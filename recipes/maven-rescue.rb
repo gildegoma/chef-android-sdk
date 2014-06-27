@@ -1,24 +1,26 @@
 # TODO: decide which way we depend on maven (weak dependency, conditional include_recipe or always include_recipe?)
 # include_recipe "maven"
 
-#
-# Install Maven Android SDK Deployer from tarball package, but it also could make sense
-# to clone the git repository (especially when provisioning a developer box)
-#
-ark node['android-sdk']['maven-android-sdk-deployer']['name'] do
-  url             node['android-sdk']['maven-android-sdk-deployer']['download_url']
-  # TODO: checksum check here is maybe overkill optimization without real safety added value
-  checksum        node['android-sdk']['maven-android-sdk-deployer']['checksum']
-  version         node['android-sdk']['maven-android-sdk-deployer']['version']
-  prefix_root     node['android-sdk']['setup_root']
-  prefix_home     node['android-sdk']['setup_root']
-  append_env_path false
-  owner           node['android-sdk']['owner']
-  group           node['android-sdk']['group']
-end
-
 maven_android_sdk_deployer_root = node['android-sdk']['setup_root'].to_s.empty? ? node['ark']['prefix_home'] : node['android-sdk']['setup_root']
 maven_android_sdk_deployer_home = File.join(maven_android_sdk_deployer_root, node['android-sdk']['maven-android-sdk-deployer']['name'])
+
+#
+# Install Maven Android SDK Deployer from git repository
+#
+directory maven_android_sdk_deployer_home do
+  user        node['android-sdk']['owner']
+  group       node['android-sdk']['group']
+  mode        00755
+  action      :create
+end
+git maven_android_sdk_deployer_home do
+  repository      node['android-sdk']['maven-android-sdk-deployer']['git_repository']
+  revision        node['android-sdk']['maven-android-sdk-deployer']['version']
+  checkout_branch "deploy_#{node['android-sdk']['maven-android-sdk-deployer']['version']}"
+  action          :sync
+  user            node['android-sdk']['owner']
+  group           node['android-sdk']['group']
+end
 
 #
 # Deploy Android SDK jar files to a Maven local repository

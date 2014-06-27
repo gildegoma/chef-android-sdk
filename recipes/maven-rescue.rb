@@ -6,15 +6,15 @@
 # to clone the git repository (especially when provisioning a developer box)
 #
 ark node['android-sdk']['maven-android-sdk-deployer']['name'] do
-  url         		node['android-sdk']['maven-android-sdk-deployer']['download_url']
+  url             node['android-sdk']['maven-android-sdk-deployer']['download_url']
   # TODO: checksum check here is maybe overkill optimization without real safety added value
-  checksum    		node['android-sdk']['maven-android-sdk-deployer']['checksum']
-  version     		node['android-sdk']['maven-android-sdk-deployer']['version']
-  prefix_root 		node['android-sdk']['setup_root']
-  prefix_home 		node['android-sdk']['setup_root']
+  checksum        node['android-sdk']['maven-android-sdk-deployer']['checksum']
+  version         node['android-sdk']['maven-android-sdk-deployer']['version']
+  prefix_root     node['android-sdk']['setup_root']
+  prefix_home     node['android-sdk']['setup_root']
   append_env_path false
-  owner       		node['android-sdk']['owner']
-  group       		node['android-sdk']['group']
+  owner           node['android-sdk']['owner']
+  group           node['android-sdk']['group']
 end
 
 maven_android_sdk_deployer_root = node['android-sdk']['setup_root'].to_s.empty? ? node['ark']['prefix_home'] : node['android-sdk']['setup_root']
@@ -42,4 +42,3 @@ execute 'Execute maven-android-sdk-deployer' do
 
   # Note: There is no idempotent guard for now. Pending on https://github.com/gildegoma/chef-android-sdk/issues/12.
 end
-

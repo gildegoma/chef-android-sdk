@@ -18,4 +18,3 @@ supports 'ubuntu', '>= 12.04'
 
 recipe "android-sdk::default", "Install and update Google Android SDK"
 recipe "android-sdk::maven-rescue", "Install missing dependencies with Maven Android SDK Deployer"
-

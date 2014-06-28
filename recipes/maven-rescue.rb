@@ -24,23 +24,44 @@ end
 
 #
 # Deploy Android SDK jar files to a Maven local repository
-# TODO: improve the messy management of the maven repository location
+# TODO: fix a few target name mismatches in the extra folder (fe. admob, google-play-services-for-froyo, ...)
 #
-# The following is a KISS approach that should generally work pretty well, but
-# it could be nicer/safer to loop over node['android-sdk']['components'] and
-# generate a more precise `mvn -pl component1,component2,... install` command.
+# Loop over node['android-sdk']['components'],
+# convert android component name to the target names used in maven-android-sdk-deployer
+# and generate `mvn -pl component1,component2,... install` command.
 #
-# The problem: target names do not match 100% of the time (e.g. "extras/google-play-services" vs "extra-google-google_play_services")
-#
-execute 'Execute maven-android-sdk-deployer' do
-  command       "mvn clean install -Dmaven.repo.local=#{node['android-sdk']['maven-local-repository']} --fail-never -B"
-  user          node['android-sdk']['owner']
-  group         node['android-sdk']['group']
-  cwd           maven_android_sdk_deployer_home
 
-  # FIXME: setting HOME might be required (if $HOME used in node['android-sdk']['maven-local-repository'],
-  #        or if -Dmaven.repo.local is unset (default to ~/.m2/repository)
-  # environment   ({ 'HOME' => '/home/vagrant' })
+components = Array.new
 
-  # Note: There is no idempotent guard for now. Pending on https://github.com/gildegoma/chef-android-sdk/issues/12.
+node['android-sdk']['components'].each do |sdk_component|
+  # android APIs
+  if sdk_component =~ /android-[0-9]+/
+    components << sdk_component.sub("android", "platforms/android")
+  # android and GDK addon APIs
+  elsif sdk_component =~ /addon-google_(apis|gdk)-google-[0-9]+/
+    components << sdk_component.sub("addon-google_", "add-ons/google-").sub("-google","")
+  # m2 repositories
+  elsif sdk_component =~ /extra-(google|android)-m2repository/
+    components << sdk_component.sub("extra-", "repositories/")
+  # extras
+  elsif sdk_component =~ /extra-google-+/
+    components << sdk_component.sub("extra-google-", "extras/").gsub("_","-")
+  end
+end
+
+# only run maven-android-sdk-deployer when targets are defined
+if components.length > 0
+
+  execute 'Execute maven-android-sdk-deployer' do
+    command       "mvn clean install -pl #{components.join(",")} -Dmaven.repo.local=#{node['android-sdk']['maven-local-repository']} --fail-never -B"
+    user          node['android-sdk']['owner']
+    group         node['android-sdk']['group']
+    cwd           maven_android_sdk_deployer_home
+
+    # FIXME: setting HOME might be required (if $HOME used in node['android-sdk']['maven-local-repository'],
+    #        or if -Dmaven.repo.local is unset (default to ~/.m2/repository)
+    # environment   ({ 'HOME' => '/home/vagrant' })
+
+    # Note: There is no idempotent guard for now. Pending on https://github.com/gildegoma/chef-android-sdk/issues/12.
+  end
 end

@@ -153,8 +153,8 @@ node['android-sdk']['components'].each do |sdk_component|
     template "#{installed_file_flag}" do
       not_if { ::File.exists?("#{installed_file_flag}")}
       source "component.installed.erb"
-      owner  node['android-sdk']['scripts']['owner']
-      group  node['android-sdk']['scripts']['group']
+      owner  node['android-sdk']['owner']
+      group  node['android-sdk']['group']
       mode   0644
     end
 

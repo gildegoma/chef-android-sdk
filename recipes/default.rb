@@ -98,59 +98,62 @@ end
 
 package 'expect'
 
+# create directory that will contain a flag for each installed component
+installed_directory_flags = "#{setup_root}/#{node['android-sdk']['name']}-#{node['android-sdk']['version']}/installed-flags"
+directory "#{installed_directory_flags} do
+    owner  node['android-sdk']['owner']
+    group  node['android-sdk']['group']
+    mode "0644"
+    action :create
+end
+
 #
 # Install, Update (a.k.a. re-install) Android components
 #
+node['android-sdk']['components'].each do |sdk_component|
 
-# KISS: use a basic idempotent guard, waiting for https://github.com/gildegoma/chef-android-sdk/issues/12
-#unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}-#{node['android-sdk']['version']}/temp")
-  # With "--filter node['android-sdk']['components'].join(,)" pattern,
-  # some system-images were not installed as expected.
-  # The easiest way I could find to fix this problem consists
-  # in executing a dedicated 'android sdk update' command for each component to be installed.
-  node['android-sdk']['components'].each do |sdk_component|
-
-    installed_flag_file = "#{setup_root}/#{node['android-sdk']['name']}-#{node['android-sdk']['version']}/temp/#{sdk_component}.installed"
+    installed_file_flag = "#{installed_directory_flags}/#{sdk_component}.installed"
 
     script "Install: #{sdk_component}" do
-      interpreter   'expect'
-      environment   ({ 'ANDROID_HOME' => android_home })
-      path          [File.join(android_home, 'tools')]
-      user          node['android-sdk']['owner']
-      group         node['android-sdk']['group']
-      not_if { ::File.exists?("#{installed_flag_file}")}
-      #TODO: use --force or not?
-      code <<-EOF
-        spawn #{android_bin} update sdk --no-ui --all --filter #{sdk_component}
-        set timeout 1800
-        expect {
-          -regexp "Do you accept the license '(#{node['android-sdk']['license']['white_list'].join('|')})'.*" {
-                exp_send "y\r"
-                exp_continue
-          }
-          -regexp "Do you accept the license '(#{node['android-sdk']['license']['black_list'].join('|')})'.*" {
-                exp_send "n\r"
-                exp_continue
-          }
-          "Do you accept the license '*-license-*'*" {
-                exp_send "#{node['android-sdk']['license']['default_answer']}\r"
-                exp_continue
-          }
-          eof
-        }
-      EOF
+        interpreter   'expect'
+        environment   ({ 'ANDROID_HOME' => android_home })
+        path          [File.join(android_home, 'tools')]
+        user          node['android-sdk']['owner']
+        group         node['android-sdk']['group']
+        not_if { ::File.exists?("#{installed_file_flag}")}
+
+        #TODO: use --force or not?
+        code <<-EOF
+            spawn #{android_bin} update sdk --no-ui --all --filter #{sdk_component}
+            set timeout 1800
+            expect {
+                    -regexp "Do you accept the license '(#{node['android-sdk']['license']['white_list'].join('|')})'.*" {
+                    exp_send "y\r"
+                    exp_continue
+                }
+                -regexp "Do you accept the license '(#{node['android-sdk']['license']['black_list'].join('|')})'.*" {
+                    exp_send "n\r"
+                    exp_continue
+                }
+                "Do you accept the license '*-license-*'*" {
+                    exp_send "#{node['android-sdk']['license']['default_answer']}\r"
+                    exp_continue
+                }
+                eof
+            }
+        EOF
     end
 
-    bash "Creating #{installed_flag_file} installed flag file" do
-        not_if { ::File.exists?("#{installed_flag_file}")}
-        code <<-EOH
-            touch #{installed_flag_file}
-            chown #{node['android-sdk']['owner']}:#{node['android-sdk']['group']} #{installed_flag_file}
-        EOH
+
+    template "#{installed_file_flag}" do
+        not_if { ::File.exists?("#{installed_file_flag}")}
+        source "component.installed.erb"
+        owner  node['android-sdk']['scripts']['owner']
+        group  node['android-sdk']['scripts']['group']
+        mode   "0644"
     end
 
-  end
-#end
+end
 
 
 #

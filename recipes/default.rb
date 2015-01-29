@@ -96,61 +96,66 @@ template "/etc/profile.d/#{node['android-sdk']['name']}.sh"  do
   )
 end
 
-package 'expect'
-
 # create directory that will contain a flag for each installed component
 installed_directory_flags = "#{setup_root}/#{node['android-sdk']['name']}-#{node['android-sdk']['version']}/installed-flags"
-directory "#{installed_directory_flags} do
+directory "#{installed_directory_flags}" do
     owner  node['android-sdk']['owner']
     group  node['android-sdk']['group']
-    mode 0644
+    mode 0755
     action :create
 end
+
+
+package 'expect'
 
 #
 # Install, Update (a.k.a. re-install) Android components
 #
+
+# With "--filter node['android-sdk']['components'].join(,)" pattern,
+# some system-images were not installed as expected.
+# The easiest way I could find to fix this problem consists
+# in executing a dedicated 'android sdk update' command for each component to be installed.
 node['android-sdk']['components'].each do |sdk_component|
 
     installed_file_flag = "#{installed_directory_flags}/#{sdk_component}.installed"
 
     script "Install: #{sdk_component}" do
-        interpreter   'expect'
-        environment   ({ 'ANDROID_HOME' => android_home })
-        path          [File.join(android_home, 'tools')]
-        user          node['android-sdk']['owner']
-        group         node['android-sdk']['group']
-        not_if { ::File.exists?("#{installed_file_flag}")}
+      interpreter   'expect'
+      environment   ({ 'ANDROID_HOME' => android_home })
+      path          [File.join(android_home, 'tools')]
+      user          node['android-sdk']['owner']
+      group         node['android-sdk']['group']
+      not_if { ::File.exists?("#{installed_file_flag}")}
 
-        #TODO: use --force or not?
-        code <<-EOF
-            spawn #{android_bin} update sdk --no-ui --all --filter #{sdk_component}
-            set timeout 1800
-            expect {
-                    -regexp "Do you accept the license '(#{node['android-sdk']['license']['white_list'].join('|')})'.*" {
-                    exp_send "y\r"
-                    exp_continue
-                }
-                -regexp "Do you accept the license '(#{node['android-sdk']['license']['black_list'].join('|')})'.*" {
-                    exp_send "n\r"
-                    exp_continue
-                }
-                "Do you accept the license '*-license-*'*" {
-                    exp_send "#{node['android-sdk']['license']['default_answer']}\r"
-                    exp_continue
-                }
-                eof
-            }
-        EOF
+      #TODO: use --force or not?
+      code <<-EOF
+        spawn #{android_bin} update sdk --no-ui --all --filter #{sdk_component}
+        set timeout 1800
+        expect {
+          -regexp "Do you accept the license '(#{node['android-sdk']['license']['white_list'].join('|')})'.*" {
+                exp_send "y\r"
+                exp_continue
+          }
+          -regexp "Do you accept the license '(#{node['android-sdk']['license']['black_list'].join('|')})'.*" {
+                exp_send "n\r"
+                exp_continue
+          }
+          "Do you accept the license '*-license-*'*" {
+                exp_send "#{node['android-sdk']['license']['default_answer']}\r"
+                exp_continue
+          }
+          eof
+        }
+      EOF
     end
 
-
     template "#{installed_file_flag}" do
-        not_if { ::File.exists?("#{installed_file_flag}")}
-        source "component.installed.erb"
-        owner  node['android-sdk']['scripts']['owner']
-        group  node['android-sdk']['scripts']['group']
-        mode   0644
+      not_if { ::File.exists?("#{installed_file_flag}")}
+      source "component.installed.erb"
+      owner  node['android-sdk']['scripts']['owner']
+      group  node['android-sdk']['scripts']['group']
+      mode   0644
     end
 
 end

@@ -141,7 +141,7 @@ package 'expect'
       EOF
     end
 
-    bash 'Adding i386 architecture' do
+    bash "Creating #{installed_flag_file} installed flag file" do
         not_if { ::File.exists?("#{installed_flag_file}")}
         code <<-EOH
             touch #{installed_flag_file}

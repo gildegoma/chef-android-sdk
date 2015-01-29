@@ -103,7 +103,7 @@ installed_directory_flags = "#{setup_root}/#{node['android-sdk']['name']}-#{node
 directory "#{installed_directory_flags} do
     owner  node['android-sdk']['owner']
     group  node['android-sdk']['group']
-    mode "0644"
+    mode 0644
     action :create
 end
 
@@ -150,7 +150,7 @@ node['android-sdk']['components'].each do |sdk_component|
         source "component.installed.erb"
         owner  node['android-sdk']['scripts']['owner']
         group  node['android-sdk']['scripts']['group']
-        mode   "0644"
+        mode   0644
     end
 
 end

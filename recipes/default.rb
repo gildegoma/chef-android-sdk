@@ -73,12 +73,12 @@ end
 end
 # TODO find a way to handle 'chmod stuff' below with own chef resource (idempotence stuff...)
 execute 'Grant all users to read android files' do
-  command       "sudo chmod -R a+r #{node['android-sdk']['setup_root']}/android-sdk-*/*"
+  command       "chmod -R a+r #{android_home}/*"
   user          node['android-sdk']['owner']
   group         node['android-sdk']['group']
 end
 execute 'Grant all users to execute android tools' do
-  command       "sudo chmod -R a+X #{File.join(node['android-sdk']['setup_root'], 'android-sdk-*', 'tools')}/*"
+  command       "chmod -R a+X #{File.join(android_home, 'tools')}/*"
   user          node['android-sdk']['owner']
   group         node['android-sdk']['group']
 end

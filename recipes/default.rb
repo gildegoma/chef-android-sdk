@@ -61,6 +61,7 @@ ark node['android-sdk']['name'] do
   prefix_home node['android-sdk']['setup_root']
   owner       node['android-sdk']['owner']
   group       node['android-sdk']['group']
+  action      :install
 end
 
 #
@@ -96,26 +97,38 @@ template "/etc/profile.d/#{node['android-sdk']['name']}.sh"  do
   )
 end
 
+# create directory that will contain a flag for each installed component
+installed_directory_flags = "#{setup_root}/#{node['android-sdk']['name']}-#{node['android-sdk']['version']}/installed-flags"
+directory "#{installed_directory_flags}" do
+    owner  node['android-sdk']['owner']
+    group  node['android-sdk']['group']
+    mode 0755
+    action :create
+end
+
+
 package 'expect'
 
 #
 # Install, Update (a.k.a. re-install) Android components
 #
 
-# KISS: use a basic idempotent guard, waiting for https://github.com/gildegoma/chef-android-sdk/issues/12
-unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}-#{node['android-sdk']['version']}/temp")
+# With "--filter node['android-sdk']['components'].join(,)" pattern,
+# some system-images were not installed as expected.
+# The easiest way I could find to fix this problem consists
+# in executing a dedicated 'android sdk update' command for each component to be installed.
+node['android-sdk']['components'].each do |sdk_component|
 
-  # With "--filter node['android-sdk']['components'].join(,)" pattern,
-  # some system-images were not installed as expected.
-  # The easiest way I could find to fix this problem consists
-  # in executing a dedicated 'android sdk update' command for each component to be installed.
-  node['android-sdk']['components'].each do |sdk_component|
-    script 'Install Android SDK platforms and tools' do
+    installed_file_flag = "#{installed_directory_flags}/#{sdk_component}.installed"
+
+    script "Install: #{sdk_component}" do
       interpreter   'expect'
       environment   ({ 'ANDROID_HOME' => android_home })
       path          [File.join(android_home, 'tools')]
       user          node['android-sdk']['owner']
       group         node['android-sdk']['group']
+      not_if { ::File.exists?("#{installed_file_flag}")}
+
       #TODO: use --force or not?
       code <<-EOF
         spawn #{android_bin} update sdk --no-ui --all --filter #{sdk_component}
@@ -137,7 +150,15 @@ unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}-#{node['android
         }
       EOF
     end
-  end
+
+    template "#{installed_file_flag}" do
+      not_if { ::File.exists?("#{installed_file_flag}")}
+      source "component.installed.erb"
+      owner  node['android-sdk']['owner']
+      group  node['android-sdk']['group']
+      mode   0644
+    end
+
 end
 
 

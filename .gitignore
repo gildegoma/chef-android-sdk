@@ -8,4 +8,4 @@ Berksfile.lock
 .ruby-version
 .ruby-gemset
 .rspec
-
+.idea

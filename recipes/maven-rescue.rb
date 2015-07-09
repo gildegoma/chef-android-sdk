@@ -8,18 +8,18 @@ maven_android_sdk_deployer_home = File.join(maven_android_sdk_deployer_root, nod
 # Install Maven Android SDK Deployer from git repository
 #
 directory maven_android_sdk_deployer_home do
-  user        node['android-sdk']['owner']
-  group       node['android-sdk']['group']
-  mode        00755
-  action      :create
+  user node['android-sdk']['owner']
+  group node['android-sdk']['group']
+  mode 00755
+  action :create
 end
 git maven_android_sdk_deployer_home do
-  repository      node['android-sdk']['maven-android-sdk-deployer']['git_repository']
-  revision        node['android-sdk']['maven-android-sdk-deployer']['version']
+  repository node['android-sdk']['maven-android-sdk-deployer']['git_repository']
+  revision node['android-sdk']['maven-android-sdk-deployer']['version']
   checkout_branch "deploy_#{node['android-sdk']['maven-android-sdk-deployer']['version']}"
-  action          :sync
-  user            node['android-sdk']['owner']
-  group           node['android-sdk']['group']
+  action :sync
+  user node['android-sdk']['owner']
+  group node['android-sdk']['group']
 end
 
 #
@@ -33,10 +33,10 @@ end
 # The problem: target names do not match 100% of the time (e.g. "extras/google-play-services" vs "extra-google-google_play_services")
 #
 execute 'Execute maven-android-sdk-deployer' do
-  command       "mvn clean install -Dmaven.repo.local=#{node['android-sdk']['maven-local-repository']} --fail-never -B"
-  user          node['android-sdk']['owner']
-  group         node['android-sdk']['group']
-  cwd           maven_android_sdk_deployer_home
+  command "mvn clean install -Dmaven.repo.local=#{node['android-sdk']['maven-local-repository']} --fail-never -B"
+  user node['android-sdk']['owner']
+  group node['android-sdk']['group']
+  cwd maven_android_sdk_deployer_home
 
   # FIXME: setting HOME might be required (if $HOME used in node['android-sdk']['maven-local-repository'],
   #        or if -Dmaven.repo.local is unset (default to ~/.m2/repository)

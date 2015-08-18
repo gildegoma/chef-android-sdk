@@ -23,7 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe 'java'
+include_recipe 'java' unless node['android-sdk']['java_from_system']
 
 setup_root       = node['android-sdk']['setup_root'].to_s.empty? ? node['ark']['prefix_home'] : node['android-sdk']['setup_root']
 android_home     = File.join(setup_root, node['android-sdk']['name'])
@@ -55,12 +55,14 @@ end
 #
 ark node['android-sdk']['name'] do
   url node['android-sdk']['download_url']
+  path node['android-sdk']['setup_root']
   checksum node['android-sdk']['checksum']
   version node['android-sdk']['version']
   prefix_root node['android-sdk']['setup_root']
   prefix_home node['android-sdk']['setup_root']
   owner node['android-sdk']['owner']
   group node['android-sdk']['group']
+  action node['android-sdk']['setup_root'].nil? ? :install : :put
 end
 
 #
@@ -94,6 +96,7 @@ template "/etc/profile.d/#{node['android-sdk']['name']}.sh"  do
   variables(
     android_home: android_home
   )
+  only_if { node['android-sdk']['set_environment_variables'] }
 end
 
 package 'expect'

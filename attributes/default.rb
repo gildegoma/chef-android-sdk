@@ -18,6 +18,7 @@ default['android-sdk']['download_url']              = "http://dl.google.com/andr
 # Add 'tools' to the list below if you wish to get the latest version,
 # without having to adapt 'version' and 'checksum' attributes of this cookbook.
 # Note that it will require (waste) some extra download effort.
+#
 default['android-sdk']['components']                = %w(platform-tools
                                                         build-tools-22.0.1
                                                         android-22
@@ -42,8 +43,8 @@ default['android-sdk']['components']                = %w(platform-tools
                                                         extra-google-m2repository
                                                         extra-android-m2repository)
 
-default['android-sdk']['license']['white_list']     = %w(android-sdk-license-.+ intel-.+)
-default['android-sdk']['license']['black_list']     = []    # e.g. ['mips-.+', 'android-wear-sdk-license-.+']
+default['android-sdk']['license']['white_list']     = %w(.+)
+default['android-sdk']['license']['black_list']     = []    # e.g. ['intel-.+', 'mips-.+', 'android-wear-sdk-license-.+']
 default['android-sdk']['license']['default_answer'] = 'n'   # 'y' or 'n' ('yes' or 'no')
 
 default['android-sdk']['scripts']['path']           = '/usr/local/bin'

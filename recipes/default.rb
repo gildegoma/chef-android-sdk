@@ -106,7 +106,7 @@ package 'expect'
 #
 
 # KISS: use a basic idempotent guard, waiting for https://github.com/gildegoma/chef-android-sdk/issues/12
-unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}-#{node['android-sdk']['version']}/temp")
+unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}/temp")
 
   # With "--filter node['android-sdk']['components'].join(,)" pattern,
   # some system-images were not installed as expected.

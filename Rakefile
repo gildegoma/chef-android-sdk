@@ -3,10 +3,11 @@
 require 'foodcritic'
 require 'rake/testtask'
 require 'tailor/rake_task'
+require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
 
 # TODO: add chefspec
-task default: [:tailor, :foodcritic, :knife]
+task default: [:tailor, :rubocop, :foodcritic, :knife]
 
 desc 'Lint Ruby code'
 task :tailor do
@@ -34,6 +35,8 @@ task :tailor do
     end
   end
 end
+
+RuboCop::RakeTask.new
 
 FoodCritic::Rake::LintTask.new do |t|
   t.options = { fail_tags: ['any'], tags: ['~FC041'] }

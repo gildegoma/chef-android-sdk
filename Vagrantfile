@@ -37,11 +37,11 @@ Vagrant.configure('2') do |config|
         'owner' => 'vagrant',
         'group' => 'vagrant',
         'components' => ['android-20', 'android-19'],
-#        'setup_root' => '/opt/somewhere',
-#        'with_symlink' => false,
-#        'java_from_system' => true,
-        'maven-rescue' => true,
-        'maven-local-repository' => '/home/vagrant/.m2/repository'
+        # 'setup_root' => '/opt/somewhere',
+        # 'with_symlink' => false,
+        # 'java_from_system' => true,
+        'maven_rescue' => true,
+        'maven_local_repository' => '/home/vagrant/.m2/repository'
       }
     }
   end

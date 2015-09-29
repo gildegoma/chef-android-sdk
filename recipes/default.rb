@@ -167,4 +167,4 @@ end
 #
 # Install Maven Android SDK Deployer toolkit to populate local Maven repository
 #
-include_recipe('android-sdk::maven-rescue') if node['android-sdk']['maven-rescue']
+include_recipe('android-sdk::maven_rescue') if node['android-sdk']['maven_rescue']

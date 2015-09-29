@@ -11,6 +11,7 @@ v0.2.0 (2015-09-29)
 - Add the `with_symlink` option to use ark's friendly symlink feature (enabled by default)
 - Deploy scripts for waiting on Emulator startup [GH-16]
 - Deploy scripts for non-interactive SDK setup/updates [GH-13]
+- Add Rubocop checks [GH-7]
 - WIP: Optionally install Maven Android SDK Deployer [GH-14]
 
 v0.1.1 (2014-04-01)

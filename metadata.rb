@@ -18,4 +18,4 @@ supports 'centos', '>= 6.6'
 # Please watch or help on https://github.com/gildegoma/chef-android-sdk/issues/5
 
 recipe 'android-sdk::default', 'Install and update Google Android SDK'
-recipe 'android-sdk::maven-rescue', 'Install missing dependencies with Maven Android SDK Deployer'
+recipe 'android-sdk::maven_rescue', 'Install missing dependencies with Maven Android SDK Deployer'

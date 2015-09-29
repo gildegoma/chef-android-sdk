@@ -2,6 +2,7 @@ default['android-sdk']['name']                      = 'android-sdk'
 default['android-sdk']['owner']                     = 'root'
 default['android-sdk']['group']                     = 'root'
 default['android-sdk']['setup_root']                = nil  # ark defaults (/usr/local) is used if this attribute is not defined
+default['android-sdk']['with_symlink']              = true # use ark's :install action when true; use ark's :put action when false
 default['android-sdk']['set_environment_variables'] = true
 
 default['android-sdk']['version']                   = '24.3.4'

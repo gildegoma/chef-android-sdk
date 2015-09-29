@@ -36,7 +36,10 @@ Vagrant.configure('2') do |config|
       'android-sdk' => {
         'owner' => 'vagrant',
         'group' => 'vagrant',
-        #        "components" => ['android-20', 'android-19']
+        'components' => ['android-20', 'android-19'],
+#        'setup_root' => '/opt/somewhere',
+#        'with_symlink' => false,
+#        'java_from_system' => true,
         'maven-rescue' => true,
         'maven-local-repository' => '/home/vagrant/.m2/repository'
       }

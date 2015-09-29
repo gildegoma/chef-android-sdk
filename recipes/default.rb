@@ -115,7 +115,7 @@ unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}-#{node['android
   node['android-sdk']['components'].each do |sdk_component|
     script "Install Android SDK component #{sdk_component}" do
       interpreter 'expect'
-      environment ({ 'ANDROID_HOME' => android_home })
+      environment 'ANDROID_HOME' => android_home
       path [File.join(android_home, 'tools')]
       user node['android-sdk']['owner']
       group node['android-sdk']['group']

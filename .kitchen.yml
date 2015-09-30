@@ -8,6 +8,13 @@ provisioner:
 
 platforms:
 
+- name: ubuntu-12.04
+  driver:
+    customize:
+      memory: 384
+    run_list:
+      - recipe[apt]
+
 - name: ubuntu-14.04
   driver:
     customize:
@@ -56,3 +63,5 @@ suites:
     android-sdk:
       components:
         - build-tools-22.0.1
+        - android-22
+        - sys-img-armeabi-v7a-android-22

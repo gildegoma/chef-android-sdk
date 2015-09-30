@@ -4,6 +4,7 @@
 AllCops:
   Exclude:
     - 'tmp/**/*'
+    - 'vendor/**/*'
 
 Metrics/LineLength:
   Max: 150

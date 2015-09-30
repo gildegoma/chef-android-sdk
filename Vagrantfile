@@ -14,8 +14,9 @@ Vagrant.configure('2') do |config|
   # Vagrant Plugins:
   #
   config.cache.scope = :box if Vagrant.has_plugin?('vagrant-cachier')
-  config.omnibus.chef_version = :latest
-  config.berkshelf.enabled = true
+  #  config.omnibus.chef_version = "11" #11.18.14 # :latest
+  #  config.berkshelf.enabled = false
+  #  config.berkshelf.args = ["--format json"]
 
   #
   # Chef Provisioning

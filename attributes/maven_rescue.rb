@@ -6,4 +6,4 @@ default['android-sdk']['maven-android-sdk-deployer']['git_repository']  = 'https
 # FIXME: this default is crappy, as $HOME is not well handled by the recipe.
 # TODO: explain/verify why I don't want to be depending on
 # Maven cookbook attributes (e.g. use node['maven']['mavenrc']['opts'])
-default['android-sdk']['maven_local_repository']                     = '$HOME/.m2/repository'
+default['android-sdk']['maven_local_repository']                        = '$HOME/.m2/repository'

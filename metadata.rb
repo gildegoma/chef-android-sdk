@@ -10,7 +10,7 @@ version '0.2.0' # not released
 end
 
 # TODO: maybe put maven into depends section
-recommends 'maven'  # Maven 3.1.1+ is required by android-sdk::maven-rescue recipe
+recommends 'maven' # Maven 3.1.1+ is required by android-sdk::maven-rescue recipe
 
 supports 'ubuntu', '>= 12.04'
 supports 'centos', '>= 6.6'

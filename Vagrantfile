@@ -3,8 +3,8 @@ Vagrant.configure('2') do |config|
   # Vagrant Base Box and virutal hardware tuning
   #
 
-  # config.vm.box       = "ubuntu/precise64"
-  config.vm.box       = 'ubuntu/trusty64'
+  # config.vm.box = "ubuntu/precise64"
+  config.vm.box = 'ubuntu/trusty64'
 
   config.vm.provider :virtualbox do |p|
     p.customize ['modifyvm', :id, '--memory', 768]

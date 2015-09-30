@@ -88,7 +88,7 @@ end
 #
 # Configure environment variables (ANDROID_HOME and PATH)
 #
-template "/etc/profile.d/#{node['android-sdk']['name']}.sh"  do
+template "/etc/profile.d/#{node['android-sdk']['name']}.sh" do
   source 'android-sdk.sh.erb'
   mode 0644
   owner node['android-sdk']['owner']

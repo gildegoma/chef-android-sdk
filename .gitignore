@@ -1,10 +1,10 @@
 /tmp
+/vendor
 .kitchen/
 .vagrant*/
 Gemfile.lock
 Berksfile.lock
 .kitchen.local.yml
-.rvmrc
 .ruby-version
 .ruby-gemset
 .rubocop_todo.yml

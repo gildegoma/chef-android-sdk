@@ -1,10 +1,10 @@
 CHANGELOG for Android-SDK cookbook
 ==================================
 
-v0.2.0 (2015-09-29)
+v0.2.0 (2015-??-??)
 -------------------
 
-- Integrate by default with Android SDK 24.3.4
+- Integrate by default with Android SDK 24.4.0
 - Add the `java_from_system` option to skip java cookbook dependency (disabled by default)
 - Add the `set_environment_variables` option to automatically set related environment variables
   in user shell (enabled by default)

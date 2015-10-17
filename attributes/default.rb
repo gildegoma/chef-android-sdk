@@ -5,8 +5,8 @@ default['android-sdk']['setup_root']                = nil  # ark defaults (/usr/
 default['android-sdk']['with_symlink']              = true # use ark's :install action when true; use ark's :put action when false
 default['android-sdk']['set_environment_variables'] = true
 
-default['android-sdk']['version']                   = '24.3.4'
-default['android-sdk']['checksum']                  = '886412375d8fe6e49a1583e57a8a36a47943666da681701ba9ad1ab7236e83ea'
+default['android-sdk']['version']                   = '24.4'
+default['android-sdk']['checksum']                  = 'f2bb546534d16e2004665257ee530060338c684adad14a49cd4bbde08098d8a4'
 default['android-sdk']['download_url']              = "http://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-linux.tgz"
 
 #

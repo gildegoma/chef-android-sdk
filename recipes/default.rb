@@ -62,6 +62,7 @@ ark node['android-sdk']['name'] do
   prefix_home node['android-sdk']['setup_root']
   owner node['android-sdk']['owner']
   group node['android-sdk']['group']
+  backup node['android-sdk']['backup_archive']
   action node['android-sdk']['with_symlink'] ? :install : :put
 end
 

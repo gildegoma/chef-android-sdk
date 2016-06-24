@@ -2,9 +2,9 @@ source 'https://rubygems.org'
 
 gem 'rake'
 gem 'tailor'
-gem 'chefspec', '~> 1.3.0'
+gem 'chefspec', '~> 4.7'
 gem 'foodcritic', '>= 5.0.0'
-gem 'chef', '~> 11.14'
+gem 'chef', '~> 12.11'
 gem 'rubocop'
 
 group :integration do

@@ -39,7 +39,7 @@ end
 RuboCop::RakeTask.new
 
 FoodCritic::Rake::LintTask.new do |t|
-  t.options = { fail_tags: ['any'], tags: ['~FC041'] }
+  t.options = { fail_tags: ['any'], tags: ['~FC041', '~FC053'] }
 end
 
 RSpec::Core::RakeTask.new

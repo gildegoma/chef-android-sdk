@@ -3,11 +3,13 @@ maintainer 'Gilles Cornu'
 maintainer_email 'foss@gilles.cornu.name'
 license 'Apache 2.0'
 description 'Installs Google Android SDK'
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+issues_url 'https://github.com/gildegoma/chef-android-sdk/issues'
+source_url 'https://github.com/gildegoma/chef-android-sdk'
 version '0.2.0'
 
-%w(java ark).each do |dep|
-  depends dep
-end
+depends 'java'
+depends 'ark', '>= 1.1.0'
 
 # TODO: maybe put maven into depends section
 recommends 'maven' # Maven 3.1.1+ is required by android-sdk::maven-rescue recipe

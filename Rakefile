@@ -7,7 +7,7 @@ require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
 
 # TODO: add chefspec
-task default: [:tailor, :rubocop, :foodcritic, :knife]
+task default: [:bats, :tailor, :rubocop, :foodcritic, :knife]
 
 desc 'Lint Ruby code'
 task :tailor do
@@ -76,6 +76,13 @@ task :prepare_sandbox do
   end
 end
 
+desc 'Check node using bats test'
+task :bats do
+  Dir.chdir(bats_test_path) do
+    sh 'bats --tap default.bats'
+  end
+end
+
 begin
   require 'kitchen/rake_tasks'
   Kitchen::RakeTasks.new
@@ -103,4 +110,8 @@ end
 
 def knife_rb
   File.join(sandbox_root, 'knife.rb')
+end
+
+def bats_test_path
+  File.join(File.dirname(__FILE__), %w(tests integration default bats))
 end

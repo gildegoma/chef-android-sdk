@@ -1,9 +1,25 @@
+os:
+  - linux
+  - osx
 language: ruby
-sudo: false
 rvm:
-  - 2.1
-  - 2
+  - 2.2.2
+env:
+  - BERKSHELF_PATH=/tmp/
 before_install:
-- gem install bundler
-bundler_args: --without integration
-cache: bundler
+  - git clone https://github.com/sstephenson/bats.git
+  - sudo ./bats/install.sh /usr/local
+  - curl -L https://www.chef.io/chef/install.sh | sudo bash
+  - gem install bundler
+install:
+  - bundle install --without integration
+  - bundle exec berks vendor /tmp/cookbooks
+  - cp tests/support/dummy-validation.pem /tmp/validation.pem
+  - cp tests/support/client.rb /tmp/client.rb
+  - cp tests/support/dna.json /tmp/dna.json
+script:
+  - rvm reset # To use the embedded ruby in chef-client
+  - sudo chef-client -z -c /tmp/client.rb -j /tmp/dna.json # Run chef in zero mode
+  - '[ -f ~/.bash_profile ] && source ~/.bash_profile || source ~/.profile && source /etc/profile' # Apply new env vars
+  - rvm use ruby-2.2.2 # To use the rvm ruby and custom gems
+  - bundle exec rake # Test all

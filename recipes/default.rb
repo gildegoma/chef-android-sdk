@@ -23,6 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+include_recipe 'chef-sugar::default'
 include_recipe 'java' unless node['android-sdk']['java_from_system']
 
 setup_root       = node['android-sdk']['setup_root'].to_s.empty? ? node['ark']['prefix_home'] : node['android-sdk']['setup_root']
@@ -53,15 +54,25 @@ end
 #
 # Download and setup android-sdk tarball package
 #
+if linux?
+  sdk_url = node['android-sdk']['download_url']['linux']
+  sdk_checksum = node['android-sdk']['checksum']['linux']
+elsif mac_os_x?
+  sdk_url = node['android-sdk']['download_url']['mac_os_x']
+  sdk_checksum = node['android-sdk']['checksum']['mac_os_x']
+else
+  Chef::Log.error('Platform not supported!')
+end
+
 ark node['android-sdk']['name'] do
-  url node['android-sdk']['download_url']
+  url sdk_url
   path node['android-sdk']['setup_root']
-  checksum node['android-sdk']['checksum']
+  checksum sdk_checksum
   version node['android-sdk']['version']
   prefix_root node['android-sdk']['setup_root']
   prefix_home node['android-sdk']['setup_root']
   owner node['android-sdk']['owner']
-  group node['android-sdk']['group']
+  group node['android-sdk']['group'] unless mac_os_x?
   backup node['android-sdk']['backup_archive']
   action node['android-sdk']['with_symlink'] ? :install : :put
 end
@@ -71,40 +82,53 @@ end
 #
 %w(add-ons platforms tools).each do |subfolder|
   directory File.join(android_home, subfolder) do
-    mode 0755
+    mode '0755'
   end
 end
 # TODO: find a way to handle 'chmod stuff' below with own chef resource (idempotence stuff...)
 execute 'Grant all users to read android files' do
   command "chmod -R a+r #{android_home}/*"
   user node['android-sdk']['owner']
-  group node['android-sdk']['group']
+  group node['android-sdk']['group'] unless mac_os_x?
 end
 execute 'Grant all users to execute android tools' do
   command "chmod -R a+X #{File.join(android_home, 'tools')}/*"
   user node['android-sdk']['owner']
-  group node['android-sdk']['group']
+  group node['android-sdk']['group'] unless mac_os_x?
 end
 
 #
 # Configure environment variables (ANDROID_HOME and PATH)
 #
-template "/etc/profile.d/#{node['android-sdk']['name']}.sh" do
-  source 'android-sdk.sh.erb'
-  mode 0644
-  owner node['android-sdk']['owner']
-  group node['android-sdk']['group']
-  variables(
-    android_home: android_home
-  )
-  only_if { node['android-sdk']['set_environment_variables'] }
+if linux?
+  template "/etc/profile.d/#{node['android-sdk']['name']}.sh" do
+    source 'android-sdk.sh.erb'
+    mode '0644'
+    owner node['android-sdk']['owner']
+    group node['android-sdk']['group'] unless mac_os_x?
+    variables(
+      android_home: android_home
+    )
+    only_if { node['android-sdk']['set_environment_variables'] }
+  end
+elsif mac_os_x?
+  bash_profile 'profile.android_sdk' do
+    user node['android-sdk']['owner']
+    content <<-EOH
+      export ANDROID_HOME=#{android_home}
+      export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+    EOH
+  end
+else
+  Chef::Log.error('Platform not supported!')
 end
-
-package 'expect'
 
 #
 # Install, Update (a.k.a. re-install) Android components
 #
+
+homebrew_tap 'homebrew/dupes' if mac_os_x?
+package 'expect'
 
 # KISS: use a basic idempotent guard, waiting for https://github.com/gildegoma/chef-android-sdk/issues/12
 unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}/temp")
@@ -119,7 +143,7 @@ unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}/temp")
       environment 'ANDROID_HOME' => android_home
       path [File.join(android_home, 'tools')]
       user node['android-sdk']['owner']
-      group node['android-sdk']['group']
+      group node['android-sdk']['group'] unless mac_os_x?
       # TODO: use --force or not?
       code <<-EOF
         spawn #{android_bin} update sdk --no-ui --all --filter #{sdk_component}
@@ -152,16 +176,16 @@ end
   cookbook_file File.join(node['android-sdk']['scripts']['path'], android_helper_script) do
     source android_helper_script
     owner node['android-sdk']['scripts']['owner']
-    group node['android-sdk']['scripts']['group']
-    mode 0755
+    group node['android-sdk']['scripts']['group'] unless mac_os_x?
+    mode '0755'
   end
 end
 %w(android-update-sdk).each do |android_helper_script|
   template File.join(node['android-sdk']['scripts']['path'], android_helper_script) do
     source "#{android_helper_script}.erb"
     owner node['android-sdk']['scripts']['owner']
-    group node['android-sdk']['scripts']['group']
-    mode 0755
+    group node['android-sdk']['scripts']['group'] unless mac_os_x?
+    mode '0755'
   end
 end
 

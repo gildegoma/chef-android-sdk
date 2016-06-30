@@ -8,7 +8,7 @@ gem 'chef', '~> 12.11'
 gem 'rubocop'
 
 group :integration do
-  gem 'berkshelf', '~> 3.3.0'
-  gem 'test-kitchen', '~> 1.4.2'
-  gem 'kitchen-vagrant', '~> 0.19.0'
+  gem 'berkshelf', '~> 4.3'
+  gem 'test-kitchen', '~> 1.10'
+  gem 'kitchen-vagrant', '~> 0.20.0'
 end

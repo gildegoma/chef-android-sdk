@@ -9,4 +9,4 @@ Berksfile.lock
 .ruby-gemset
 .rubocop_todo.yml
 .rspec
-
+.idea

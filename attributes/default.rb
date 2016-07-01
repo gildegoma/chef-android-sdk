@@ -1,13 +1,16 @@
 default['android-sdk']['name']                      = 'android-sdk'
 default['android-sdk']['owner']                     = 'root'
 default['android-sdk']['group']                     = 'root'
-default['android-sdk']['setup_root']                = nil  # ark defaults (/usr/local) is used if this attribute is not defined
-default['android-sdk']['with_symlink']              = true # use ark's :install action when true; use ark's :put action when false
+default['android-sdk']['backup_archive']            = false # The number of backups to be kept in /var/chef/backup. To prevent backups set to false.
+default['android-sdk']['setup_root']                = nil   # ark defaults (/usr/local) is used if this attribute is not defined
+default['android-sdk']['with_symlink']              = true  # use ark's :install action when true; use ark's :put action when false
 default['android-sdk']['set_environment_variables'] = true
 
 default['android-sdk']['version']                   = '24.4'
-default['android-sdk']['checksum']                  = 'f2bb546534d16e2004665257ee530060338c684adad14a49cd4bbde08098d8a4'
-default['android-sdk']['download_url']              = "http://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-linux.tgz"
+default['android-sdk']['checksum']['linux']         = 'f2bb546534d16e2004665257ee530060338c684adad14a49cd4bbde08098d8a4'
+default['android-sdk']['checksum']['mac_os_x']      = 'a1cb0c9b2036d597e18986de1bd43918b6113373ff3bf6fdb81b6cce4ec3efd7'
+default['android-sdk']['download_url']['linux']     = "http://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-linux.tgz"
+default['android-sdk']['download_url']['mac_os_x']  = "https://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-macosx.zip"
 
 #
 # List of Android SDK components to preinstall:

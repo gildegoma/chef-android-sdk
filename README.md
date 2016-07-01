@@ -7,14 +7,14 @@ The **default** recipe of this Chef cookbook will:
 
 * Download and install/upgrade Android SDK (not ADT)
 * Update SDK dependencies to install *some* Android platforms (`--filter` list can be customized in cookbook attributes)
-* Define a default `ANDROID_HOME` environment variable (via `/etc/profile.d/...` mechanism)
-* Add `ANDROID_HOME/tools` and `ANDROID_HOME/platform-tools` to default `PATH` environment variable (via `/etc/profile.d/...` mechanism)
+* Define a default `ANDROID_HOME` environment variable
+* Add `ANDROID_HOME/tools` and `ANDROID_HOME/platform-tools` to default `PATH` environment variable
 
 Requirements
 ------------
 
-* Depends on **opscode/ark** and **opscode/java** cookbooks
-* This cookbook currently supports Ubuntu 12.04+ and CentOS 6.6+, but more Linux distributions are welcome (depending on community interests)
+* Depends on **ark**, **java**, **homebrew**, **chef-sugar** and **bash** cookbooks
+* This cookbook currently supports Ubuntu 12.04+ and CentOS 6.6+, Mac OS X
 
 Attributes
 ----------
@@ -24,7 +24,7 @@ TODO (work in progress)
 Installation and Usage
 ----------------------
 
-This cookbook is released at http://community.opscode.com/cookbooks/android-sdk and its original git repository is https://github.com/gildegoma/chef-android-sdk.
+This cookbook is released at https://supermarket.chef.io/cookbooks/android-sdk and its original git repository is https://github.com/gildegoma/chef-android-sdk.
 
 * Find your favourite way ([Berkhelf](http://berkshelf.com/), [Librarian-Chef](https://github.com/applicationsonline/librarian#readme), knife-github-cookbooks, Git submodule, Opscode community API or even tarball download) to install this cookbook (and its dependency).
 * Include the `android-sdk::default` recipe to your run list or inside your cookbook.
@@ -35,7 +35,7 @@ Quality Assurance
 
 ### Continous Integration
 
-This Cookbook is being _tasted_ by Travis CI: [![Build Status](https://secure.travis-ci.org/gildegoma/chef-android-sdk.png?branch=master)](https://travis-ci.org/gildegoma/chef-android-sdk)
+This Cookbook is being _tested_ by Travis CI: [![Build Status](https://secure.travis-ci.org/gildegoma/chef-android-sdk.png?branch=master)](https://travis-ci.org/gildegoma/chef-android-sdk)
 
 Automated validations are following:
   * Static Analysis of Ruby code with [tailor](https://github.com/turboladen/tailor#readme) lint tool
@@ -43,7 +43,7 @@ Automated validations are following:
   * `knife cookbook test` in a very basic sandbox
   * _PENDING:_ Expectations described with RSpec examples with [ChefSpec](https://github.com/acrmp/chefspec)
   * _PENDING:_ [ServerSpec](http://serverspec.org/) integration testing
-  * _PENDING:_ Run true chef (matrix) on travis VM!
+  * Run true chef (matrix) on travis VM with Bats test
 
 ### Development and Testing
 

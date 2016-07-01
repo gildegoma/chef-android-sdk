@@ -9,8 +9,8 @@ maven_android_sdk_deployer_home = File.join(maven_android_sdk_deployer_root, nod
 #
 directory maven_android_sdk_deployer_home do
   user node['android-sdk']['owner']
-  group node['android-sdk']['group']
-  mode 00755
+  group node['android-sdk']['group'] unless mac_os_x?
+  mode '0755'
   action :create
 end
 git maven_android_sdk_deployer_home do
@@ -19,7 +19,7 @@ git maven_android_sdk_deployer_home do
   checkout_branch "deploy_#{node['android-sdk']['maven-android-sdk-deployer']['version']}"
   action :sync
   user node['android-sdk']['owner']
-  group node['android-sdk']['group']
+  group node['android-sdk']['group'] unless mac_os_x?
 end
 
 #
@@ -35,7 +35,7 @@ end
 execute 'Execute maven-android-sdk-deployer' do
   command "mvn clean install -Dmaven.repo.local=#{node['android-sdk']['maven-local-repository']} --fail-never -B"
   user node['android-sdk']['owner']
-  group node['android-sdk']['group']
+  group node['android-sdk']['group'] unless mac_os_x?
   cwd maven_android_sdk_deployer_home
 
   # FIXME: setting HOME might be required (if $HOME used in node['android-sdk']['maven-local-repository'],

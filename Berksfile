@@ -2,12 +2,8 @@ source 'https://supermarket.chef.io'
 
 metadata
 
-group :integration do
-  cookbook 'apt'
-  cookbook 'yum'
-  cookbook 'java'
+cookbook 'ark', git: 'https://github.com/rjaros87/ark', ref: 'seven-zip' # https://github.com/chef-cookbooks/ark/issues/157
 
-  # TODO: better understand Berkshelf, and how to DRY .kitchen.yml and Berksfile...
-  cookbook 'maven'
-  cookbook 'git'
+group :integration do
+  cookbook 'android-sdk', path: './'
 end

@@ -7,16 +7,14 @@ rvm:
 env:
   - BERKSHELF_PATH=/tmp/
 before_install:
-  - git clone https://github.com/sstephenson/bats.git
-  - sudo ./bats/install.sh /usr/local
   - curl -L https://www.chef.io/chef/install.sh | sudo bash
   - gem install bundler
 install:
   - bundle install --without integration
   - bundle exec berks vendor /tmp/cookbooks
-  - cp tests/support/dummy-validation.pem /tmp/validation.pem
-  - cp tests/support/client.rb /tmp/client.rb
-  - cp tests/support/dna.json /tmp/dna.json
+  - cp test/support/dummy-validation.pem /tmp/validation.pem
+  - cp test/support/client.rb /tmp/client.rb
+  - cp test/support/dna.json /tmp/dna.json
 script:
   - rvm reset # To use the embedded ruby in chef-client
   - sudo chef-client -z -c /tmp/client.rb -j /tmp/dna.json # Run chef in zero mode

@@ -13,8 +13,8 @@ The **default** recipe of this Chef cookbook will:
 Requirements
 ------------
 
-* Depends on **ark**, **java**, **homebrew**, **chef-sugar** and **bash** cookbooks
-* This cookbook currently supports Ubuntu 12.04+ and CentOS 6.6+, Mac OS X
+* Depends on **ark**, **java**, **homebrew**, **chef-sugar**, **expect** and **bash** cookbooks
+* This cookbook currently supports Ubuntu 12.04+ and CentOS 7+, Mac OS X, Windows
 
 Attributes
 ----------
@@ -42,8 +42,8 @@ Automated validations are following:
   * Static Analysis of Chef Cookbooks with [foodcritic](http://acrmp.github.com/foodcritic/) lint tool
   * `knife cookbook test` in a very basic sandbox
   * _PENDING:_ Expectations described with RSpec examples with [ChefSpec](https://github.com/acrmp/chefspec)
-  * _PENDING:_ [ServerSpec](http://serverspec.org/) integration testing
-  * Run true chef (matrix) on travis VM with Bats test
+  * [ServerSpec](http://serverspec.org/) integration testing
+  * Run true chef (matrix) on travis VM with ServerSpec test
 
 ### Development and Testing
 

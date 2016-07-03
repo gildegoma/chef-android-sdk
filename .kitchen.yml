@@ -1,9 +1,10 @@
 ---
 driver:
   name: vagrant
+  gui: false
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
   require_chef_omnibus: latest
 
 platforms:
@@ -22,13 +23,6 @@ platforms:
     run_list:
       - recipe[apt]
 
-- name: centos-6.6
-  driver:
-    customize:
-      memory: 512
-    run_list:
-      - recipe[yum]
-
 - name: centos-7.1
   driver:
     customize:
@@ -36,9 +30,42 @@ platforms:
     run_list:
       - recipe[yum]
 
+- name: mac_el_capitan
+  os_type: mac_os_x
+  driver:
+    box: jhcook/osx-elcapitan-10.11
+    boot_timeout: 1800
+    customize:
+      cpuexecutioncap: 80 # % max of total cpu power
+
+- name: windows-2012R2
+  os_type: windows
+  driver:
+    box: mwrock/Windows2012R2
+    boot_timeout: 1800
+  attributes:
+    seven_zip:
+      home: 'C:\7-zip'
+    java:
+      oracle:
+        accept_oracle_download_terms: true
+      windows:
+        url: 'http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-windows-x64.exe'
+        package_name: 'Java SE Development Kit 7 Update 79 (64-bit)'
+      java_home: 'C:\\Program Files\\Java\\jdk1.7.0_79'
+    android-sdk:
+      owner: vagrant
+      group: vagrant
+      setup_root: 'C:/Users/vagrant/google'
+      license:
+        default_answer: y
+
 suites:
 
 - name: wip # be prepared to work on https://github.com/gildegoma/chef-android-sdk/issues/14 (maven-android-sdk-deployer)
+  excludes:
+    - windows-2012R2
+    - mac_el_capitan
   run_list:
     - recipe[git]
     - recipe[maven]
@@ -62,6 +89,7 @@ suites:
       jdk_version: 7
     android-sdk:
       components:
+        - platform-tools
         - build-tools-22.0.1
         - android-22
         - sys-img-armeabi-v7a-android-22

@@ -8,3 +8,6 @@ AllCops:
 
 Metrics/LineLength:
   Max: 150
+
+Metrics/BlockLength:
+  Max: 30

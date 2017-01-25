@@ -69,7 +69,7 @@ ark node['android-sdk']['name'] do
   prefix_root node['android-sdk']['setup_root']
   prefix_home node['android-sdk']['setup_root']
   owner node['android-sdk']['owner']
-  group node['android-sdk']['group'] unless mac_os_x?
+  group node['android-sdk']['group']
   backup node['android-sdk']['backup_archive']
   action node['android-sdk']['with_symlink'] ? :install : :put
 end
@@ -86,12 +86,12 @@ end
 execute 'Grant all users to read android files' do
   command "chmod -R a+r #{android_home}/*"
   user node['android-sdk']['owner']
-  group node['android-sdk']['group'] unless mac_os_x?
+  group node['android-sdk']['group']
 end
 execute 'Grant all users to execute android tools' do
   command "chmod -R a+X #{File.join(android_home, 'tools')}/*"
   user node['android-sdk']['owner']
-  group node['android-sdk']['group'] unless mac_os_x?
+  group node['android-sdk']['group']
 end
 
 #
@@ -102,7 +102,7 @@ if linux?
     source 'android-sdk.sh.erb'
     mode '0644'
     owner node['android-sdk']['owner']
-    group node['android-sdk']['group'] unless mac_os_x?
+    group node['android-sdk']['group']
     variables(
       android_home: android_home
     )
@@ -137,7 +137,7 @@ unless File.exist?("#{setup_root}/#{node['android-sdk']['name']}/temp")
       environment 'ANDROID_HOME' => android_home
       path [File.join(android_home, 'tools')]
       user node['android-sdk']['owner']
-      group node['android-sdk']['group'] unless mac_os_x?
+      group node['android-sdk']['group']
       # TODO: use --force or not?
       code <<-EOF
           spawn #{android_bin} update sdk --no-ui --all --filter #{sdk_component}
@@ -170,7 +170,7 @@ end
   cookbook_file File.join(node['android-sdk']['scripts']['path'], android_helper_script) do
     source android_helper_script
     owner node['android-sdk']['scripts']['owner']
-    group node['android-sdk']['scripts']['group'] unless mac_os_x?
+    group node['android-sdk']['scripts']['group']
     mode '0755'
   end
 end
@@ -179,7 +179,7 @@ end
   template File.join(node['android-sdk']['scripts']['path'], android_helper_script) do
     source "#{android_helper_script}.erb"
     owner node['android-sdk']['scripts']['owner']
-    group node['android-sdk']['scripts']['group'] unless mac_os_x?
+    group node['android-sdk']['scripts']['group']
     mode '0755'
   end
 end

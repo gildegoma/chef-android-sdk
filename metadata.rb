@@ -6,13 +6,13 @@ description 'Installs Google Android SDK'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 issues_url 'https://github.com/gildegoma/chef-android-sdk/issues'
 source_url 'https://github.com/gildegoma/chef-android-sdk'
-version '0.2.0'
+version '0.3.0'
 
-depends 'java', '~> 1.40.4'
+depends 'java', '~> 1.42'
 depends 'ark', '>= 1.1.0'
 depends 'bash', '~> 0.1.2'
 depends 'chef-sugar', '>= 3.3.0'
-depends 'expect', '~> 2.0.0'
+depends 'expect', '~> 2.0'
 
 # TODO: maybe put maven into depends section
 recommends 'maven' # Maven 3.1.1+ is required by android-sdk::maven-rescue recipe

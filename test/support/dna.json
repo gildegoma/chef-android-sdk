@@ -1,6 +1,5 @@
 {
   "android-sdk": {
-    "owner": "travis",
     "version": "24.4.1",
     "checksum": {
       "linux": "e16917ad685c1563ccbc5dd782930ee1a700a1b6a6fd3e44b83ac694650435e9",

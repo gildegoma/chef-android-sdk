@@ -30,6 +30,8 @@ android_bin      = File.join(android_home, 'tools', 'android')
 #
 # Install required libraries
 #
+package 'unzip'
+
 if node['platform'] == 'ubuntu'
   package 'libgl1-mesa-dev'
 
@@ -71,6 +73,7 @@ ark node['android-sdk']['name'] do
   owner node['android-sdk']['owner']
   group node['android-sdk']['group']
   backup node['android-sdk']['backup_archive']
+  strip_components node['android-sdk']['legacy_sdk'] ? 1 : 0
   action node['android-sdk']['with_symlink'] ? :install : :put
 end
 

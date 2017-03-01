@@ -8,57 +8,57 @@ provisioner:
   require_chef_omnibus: latest
 
 platforms:
-
-- name: ubuntu-12.04
-  driver:
-    customize:
-      memory: 384
+  - name: ubuntu-12.04
+    driver:
+      customize:
+        memory: 384
     run_list:
       - recipe[apt]
 
-- name: ubuntu-14.04
-  driver:
-    customize:
-      memory: 384
+  - name: ubuntu-14.04
+    driver:
+      customize:
+        memory: 384
     run_list:
       - recipe[apt]
 
-- name: centos-7.1
-  driver:
-    customize:
-      memory: 512
+  - name: centos-7.1
+    driver:
+      customize:
+        memory: 512
     run_list:
       - recipe[yum]
+      - recipe[yum-centos]
 
-- name: mac_el_capitan
-  os_type: mac_os_x
-  driver:
-    box: jhcook/osx-elcapitan-10.11
-    boot_timeout: 1800
-    customize:
-      cpuexecutioncap: 80 # % max of total cpu power
+  - name: mac_el_capitan
+    os_type: mac_os_x
+    driver:
+      box: jhcook/osx-elcapitan-10.11
+      boot_timeout: 1800
+      customize:
+        cpuexecutioncap: 80 # % max of total cpu power
 
-- name: windows-2012R2
-  os_type: windows
-  driver:
-    box: mwrock/Windows2012R2
-    boot_timeout: 1800
-  attributes:
-    seven_zip:
-      home: 'C:\7-zip'
-    java:
-      oracle:
-        accept_oracle_download_terms: true
-      windows:
-        url: 'http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-windows-x64.exe'
-        package_name: 'Java SE Development Kit 7 Update 79 (64-bit)'
-      java_home: 'C:\\Program Files\\Java\\jdk1.7.0_79'
-    android-sdk:
-      owner: vagrant
-      group: vagrant
-      setup_root: 'C:/Users/vagrant/google'
-      license:
-        default_answer: y
+  - name: windows-2012R2
+    os_type: windows
+    driver:
+      box: mwrock/Windows2012R2
+      boot_timeout: 1800
+    attributes:
+      seven_zip:
+        home: 'C:\7-zip'
+      java:
+        oracle:
+          accept_oracle_download_terms: true
+        windows:
+          url: 'http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-windows-x64.exe'
+          package_name: 'Java SE Development Kit 7 Update 79 (64-bit)'
+        java_home: 'C:\\Program Files\\Java\\jdk1.7.0_79'
+      android-sdk:
+        owner: vagrant
+        group: vagrant
+        setup_root: 'C:/Users/vagrant/google'
+        license:
+          default_answer: y
 
 suites:
 
@@ -81,15 +81,24 @@ suites:
     java:
       jdk_version: 7
 
-- name: default
+- name: legacy
   run_list:
     - recipe[android-sdk]
   attributes:
     java:
       jdk_version: 7
     android-sdk:
+      version: '24.4'
+      checksum:
+        linux: f2bb546534d16e2004665257ee530060338c684adad14a49cd4bbde08098d8a4
+        mac_os_x: a1cb0c9b2036d597e18986de1bd43918b6113373ff3bf6fdb81b6cce4ec3efd7
+        windows: 1f9f22271fe55bf0bf10b60556ed1a5fa2f2ca672fc20d35478325104941cb05
       components:
         - platform-tools
         - build-tools-22.0.1
         - android-22
         - sys-img-armeabi-v7a-android-22
+
+- name: default
+  run_list:
+    - recipe[android-sdk]

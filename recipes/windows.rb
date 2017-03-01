@@ -43,9 +43,15 @@ end
 
 ruby_block 'Rename directory' do
   block do
-    ::File.rename "#{setup_root}/android-sdk-windows", "#{setup_root}/#{node['android-sdk']['name']}"
+    if node['android-sdk']['legacy_sdk']
+      ::File.rename "#{setup_root}/android-sdk-windows", "#{setup_root}/#{node['android-sdk']['name']}"
+    else
+      require 'fileutils'
+      ::FileUtils.mkdir "#{setup_root}/#{node['android-sdk']['name']}"
+      ::FileUtils.mv "#{setup_root}/tools", "#{setup_root}/#{node['android-sdk']['name']}/tools"
+    end
   end
-  only_if { ::Dir.exist? "#{setup_root}\\android-sdk-windows" }
+  only_if { ::Dir.exist?("#{setup_root}\\android-sdk-windows") || ::Dir.exist?("#{setup_root}\\tools") }
 end
 
 env 'ANDROID_HOME' do

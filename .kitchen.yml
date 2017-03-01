@@ -61,25 +61,25 @@ platforms:
           default_answer: y
 
 suites:
-
-- name: wip # be prepared to work on https://github.com/gildegoma/chef-android-sdk/issues/14 (maven-android-sdk-deployer)
-  excludes:
-    - windows-2012R2
-    - mac_el_capitan
-  run_list:
-    - recipe[git]
-    - recipe[maven]
-    - recipe[android-sdk]
-  attributes:
-    android-sdk:
-      owner: vagrant
-      group: vagrant
-    components:
-      - build-tools-22.1.0
-      - android-22
-      - sysimg-22
-    java:
-      jdk_version: 7
+## WIP
+#- name: wip # be prepared to work on https://github.com/gildegoma/chef-android-sdk/issues/14 (maven-android-sdk-deployer)
+#  excludes:
+#    - windows-2012R2
+#    - mac_el_capitan
+#  run_list:
+#    - recipe[git]
+#    - recipe[maven]
+#    - recipe[android-sdk]
+#  attributes:
+#    android-sdk:
+#      owner: vagrant
+#      group: vagrant
+#    components:
+#      - build-tools-22.1.0
+#      - android-22
+#      - sysimg-22
+#    java:
+#      jdk_version: 7
 
 - name: legacy
   run_list:

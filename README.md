@@ -13,8 +13,9 @@ The **default** recipe of this Chef cookbook will:
 Requirements
 ------------
 
-* Depends on **opscode/ark** and **opscode/java** cookbooks
-* This cookbook currently supports Ubuntu 12.04+ and CentOS 6.6+, but more Linux distributions are welcome (depending on community interests)
+* Chef 12.5+ (due to transitive cookbook dependencies, and to avoid a dependency on compat_resource cookbook)
+* Depends on **chef-cookbooks/ark** and **chef-cookbooks/java** cookbooks
+* This cookbook currently supports Ubuntu 12.04+ and CentOS 6.6+, but more Linux distributions are welcome (depending on community interests). Support for MacOS and Windows is also on the [roadmap](https://github.com/gildegoma/chef-android-sdk/pull/33) thanks to @rjaros87.
 
 Attributes
 ----------

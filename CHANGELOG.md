@@ -1,9 +1,12 @@
 CHANGELOG for Android-SDK cookbook
 ==================================
 
-v0.2.1 (2017-03-02)
+v0.2.1 (2017-03-??)
 -------------------
-- Add support for Android SDK 25
+
+- Add support for Android SDK 25 (but without integration of the `sdkmanager` command) [GH-34]
+- Chef 12.5+ is now required to run this cookbook and its dependencies
+
 
 v0.2.0 (2015-10-17)
 -------------------

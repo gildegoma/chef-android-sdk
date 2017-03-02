@@ -7,14 +7,7 @@ default['android-sdk']['set_environment_variables'] = true
 
 default['android-sdk']['version']                   = '25.2.3'
 default['android-sdk']['checksum']                  = '1b35bcb94e9a686dff6460c8bca903aa0281c6696001067f34ec00093145b560'
-
-if ::Gem::Version.new(node['android-sdk']['version']) < ::Gem::Version.new('25')
-  automatic['android-sdk']['legacy_sdk']            = true
-  default['android-sdk']['download_url']            = "http://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-linux.tgz"
-else
-  automatic['android-sdk']['legacy_sdk']            = false
-  default['android-sdk']['download_url']            = "https://dl.google.com/android/repository/tools_r#{node['android-sdk']['version']}-linux.zip"
-end
+default['android-sdk']['download_url']              = "https://dl.google.com/android/repository/tools_r#{node['android-sdk']['version']}-linux.zip"
 
 #
 # List of Android SDK components to preinstall:

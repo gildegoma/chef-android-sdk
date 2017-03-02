@@ -38,9 +38,8 @@ end
 
 RuboCop::RakeTask.new
 
-FoodCritic::Rake::LintTask.new do |t|
-  t.options = { fail_tags: ['any'], tags: ['~FC041'] }
-end
+# FoodCritic exceptions are defined in the .foodcritic file of this project
+FoodCritic::Rake::LintTask.new
 
 RSpec::Core::RakeTask.new
 

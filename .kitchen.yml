@@ -62,6 +62,5 @@ suites:
       jdk_version: 7
     android-sdk:
       components:
-        - build-tools-22.0.1
-        - android-22
-        - sys-img-armeabi-v7a-android-22
+        - build-tools-25.0.2
+        - android-25

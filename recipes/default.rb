@@ -62,6 +62,7 @@ ark node['android-sdk']['name'] do
   prefix_home node['android-sdk']['setup_root']
   owner node['android-sdk']['owner']
   group node['android-sdk']['group']
+  strip_components node['android-sdk']['legacy_sdk'] ? 1 : 0
   action node['android-sdk']['with_symlink'] ? :install : :put
 end
 

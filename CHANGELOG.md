@@ -1,6 +1,10 @@
 CHANGELOG for Android-SDK cookbook
 ==================================
 
+v0.2.1 (2017-03-02)
+-------------------
+- Add support for Android SDK 25
+
 v0.2.0 (2015-10-17)
 -------------------
 

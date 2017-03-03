@@ -31,7 +31,7 @@ android_bin      = File.join(android_home, 'tools', 'android.bat')
 
 ark node['android-sdk']['name'] do
   url node['android-sdk']['download_url']['windows']
-  path setup_root
+  path "#{setup_root}/#{node['android-sdk']['name']}"
   strip_components 0
   checksum node['android-sdk']['checksum']['windows']
   version node['android-sdk']['version']
@@ -39,19 +39,6 @@ ark node['android-sdk']['name'] do
   group node['android-sdk']['group']
   backup node['android-sdk']['backup_archive']
   action :unzip
-end
-
-ruby_block 'Rename directory' do
-  block do
-    if node['android-sdk']['legacy_sdk']
-      ::File.rename "#{setup_root}/android-sdk-windows", "#{setup_root}/#{node['android-sdk']['name']}"
-    else
-      require 'fileutils'
-      ::FileUtils.mkdir "#{setup_root}/#{node['android-sdk']['name']}"
-      ::FileUtils.mv "#{setup_root}/tools", "#{setup_root}/#{node['android-sdk']['name']}/tools"
-    end
-  end
-  only_if { ::Dir.exist?("#{setup_root}\\android-sdk-windows") || ::Dir.exist?("#{setup_root}\\tools") }
 end
 
 env 'ANDROID_HOME' do

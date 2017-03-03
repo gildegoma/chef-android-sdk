@@ -11,17 +11,9 @@ default['android-sdk']['checksum']['linux']           = '1b35bcb94e9a686dff6460c
 default['android-sdk']['checksum']['mac_os_x']        = '593544d4ca7ab162705d0032fb0c0c88e75bd0f42412d09a1e8daa3394681dc6'
 default['android-sdk']['checksum']['windows']         = '23d5686ffe489e5a1af95253b153ce9d6f933e5dbabe14c494631234697a0e08'
 
-if ::Gem::Version.new(node['android-sdk']['version']) < ::Gem::Version.new('25')
-  automatic['android-sdk']['legacy_sdk']              = true
-  default['android-sdk']['download_url']['linux']     = "https://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-linux.tgz"
-  default['android-sdk']['download_url']['mac_os_x']  = "https://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-macosx.zip"
-  default['android-sdk']['download_url']['windows']   = "https://dl.google.com/android/android-sdk_r#{node['android-sdk']['version']}-windows.zip"
-else
-  automatic['android-sdk']['legacy_sdk']              = false
-  default['android-sdk']['download_url']['linux']     = "https://dl.google.com/android/repository/tools_r#{node['android-sdk']['version']}-linux.zip"
-  default['android-sdk']['download_url']['mac_os_x']  = "https://dl.google.com/android/repository/tools_r#{node['android-sdk']['version']}-macosx.zip"
-  default['android-sdk']['download_url']['windows']   = "https://dl.google.com/android/repository/tools_r#{node['android-sdk']['version']}-windows.zip"
-end
+default['android-sdk']['download_url']['linux']     = "https://dl.google.com/android/repository/tools_r#{node['android-sdk']['version']}-linux.zip"
+default['android-sdk']['download_url']['mac_os_x']  = "https://dl.google.com/android/repository/tools_r#{node['android-sdk']['version']}-macosx.zip"
+default['android-sdk']['download_url']['windows']   = "https://dl.google.com/android/repository/tools_r#{node['android-sdk']['version']}-windows.zip"
 
 #
 # List of Android SDK components to preinstall:

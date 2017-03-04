@@ -14,7 +14,7 @@ Requirements
 ------------
 
 * Depends on **ark**, **java**, **homebrew**, **chef-sugar**, **expect** and **bash** cookbooks
-* This cookbook currently supports Ubuntu 12.04+ and CentOS 7+, Mac OS X, Windows
+* This cookbook currently supports Ubuntu 12.04+ and CentOS 6.6+, but more Linux distributions are welcome (depending on community interests). Support for MacOS and Windows is also on the [roadmap](https://github.com/gildegoma/chef-android-sdk/pull/33) thanks to @rjaros87.
 
 Attributes
 ----------

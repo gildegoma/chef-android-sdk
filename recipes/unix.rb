@@ -30,6 +30,8 @@ android_bin      = File.join(android_home, 'tools', 'android')
 #
 # Install required libraries
 #
+include_recipe 'ark::default'
+
 if node['platform'] == 'ubuntu'
   package 'libgl1-mesa-dev'
 
@@ -71,17 +73,10 @@ ark node['android-sdk']['name'] do
   owner node['android-sdk']['owner']
   group node['android-sdk']['group']
   backup node['android-sdk']['backup_archive']
+  strip_components 0
   action node['android-sdk']['with_symlink'] ? :install : :put
 end
 
-#
-# Fix non-friendly 0750 permissions in order to make android-sdk available to all system users
-#
-%w(add-ons platforms tools).each do |subfolder|
-  directory File.join(android_home, subfolder) do
-    mode '0755'
-  end
-end
 # TODO: find a way to handle 'chmod stuff' below with own chef resource (idempotence stuff...)
 execute 'Grant all users to read android files' do
   command "chmod -R a+r #{android_home}/*"

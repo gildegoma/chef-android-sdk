@@ -2,40 +2,13 @@
 
 require 'foodcritic'
 require 'rake/testtask'
-require 'tailor/rake_task'
 require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
 
 # TODO: add chefspec
-task default: [:tailor, :rubocop, :foodcritic, :knife, :serverspec]
+task default: [:rubocop, :foodcritic, :knife, :serverspec]
 
 desc 'Lint Ruby code'
-task :tailor do
-  Tailor::RakeTask.new do |task|
-    task.file_set('attributes/**/*.rb', 'attributes') do |style|
-      style.max_line_length 160, level: :warn
-    end
-    # task.file_set('definitions/**/*.rb', "definitions")
-    # task.file_set('libraries/**/*.rb', "libraries")
-    task.file_set('metadata.rb', 'metadata') do |style|
-      style.max_line_length 80, level: :warn
-    end
-    # task.file_set('providers/**/*.rb', "providers")
-    task.file_set('recipes/**/*.rb', 'recipes') do |style|
-      style.max_line_length 160, level: :warn
-    end
-    # task.file_set('resources/**/*.rb', "resources")
-
-    # Template analysis is currently disabled,
-    # because I have no idea how 'ruby -c' could support ERB markers like '<%'
-    # task.file_set('templates/**/*.erb', "templates")
-
-    task.file_set('spec/**/*.rb', 'chefspec') do |style|
-      style.max_line_length 160, level: :warn
-    end
-  end
-end
-
 RuboCop::RakeTask.new
 
 FoodCritic::Rake::LintTask.new do |t|

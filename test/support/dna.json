@@ -1,14 +1,14 @@
 {
   "android-sdk": {
-    "version": "24.4.1",
+    "version": "25.2.3",
     "checksum": {
-      "linux": "e16917ad685c1563ccbc5dd782930ee1a700a1b6a6fd3e44b83ac694650435e9",
-      "mac_os_x": "ce1638cb48526a0e55857fc46b57eda4349e6512006244ad13dd6c1361c74104"
+      "linux": "1b35bcb94e9a686dff6460c8bca903aa0281c6696001067f34ec00093145b560",
+      "mac_os_x": "593544d4ca7ab162705d0032fb0c0c88e75bd0f42412d09a1e8daa3394681dc6"
     },
     "components": [
       "platform-tools",
-      "build-tools-24",
-      "android-24",
+      "build-tools-25",
+      "android-25",
       "extra-android-support",
       "extra-google-google_play_services",
       "extra-google-m2repository",

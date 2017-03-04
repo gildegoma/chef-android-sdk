@@ -35,6 +35,7 @@ platforms:
     driver:
       box: jhcook/osx-elcapitan-10.11
       boot_timeout: 1800
+      cache_directory: false
       customize:
         cpuexecutioncap: 80 # % max of total cpu power
 
@@ -90,9 +91,9 @@ suites:
     android-sdk:
       version: '24.4'
       checksum:
-        linux: f2bb546534d16e2004665257ee530060338c684adad14a49cd4bbde08098d8a4
-        mac_os_x: a1cb0c9b2036d597e18986de1bd43918b6113373ff3bf6fdb81b6cce4ec3efd7
-        windows: 1f9f22271fe55bf0bf10b60556ed1a5fa2f2ca672fc20d35478325104941cb05
+        linux: 47b0462b9935b0b9685857eeea407434ee2a47bcdee6bda64b7026f2c22ab341
+        mac_os_x: 78efef51598cbbdd417b50e00864a86a1f50c63b50599ecf40d20b179be66a71
+        windows: 12cb4a05e518ec4b816645d8571af3637ba63241c47b15eea7feba5b6804da28
       components:
         - platform-tools
         - build-tools-22.0.1

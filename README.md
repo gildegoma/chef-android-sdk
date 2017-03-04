@@ -25,9 +25,9 @@ TODO (work in progress)
 Installation and Usage
 ----------------------
 
-This cookbook is released at http://community.opscode.com/cookbooks/android-sdk and its original git repository is https://github.com/gildegoma/chef-android-sdk.
+This cookbook is released at https://supermarket.chef.io/cookbooks/android-sdk and its original git repository is https://github.com/gildegoma/chef-android-sdk.
 
-* Find your favourite way ([Berkhelf](http://berkshelf.com/), [Librarian-Chef](https://github.com/applicationsonline/librarian#readme), knife-github-cookbooks, Git submodule, Opscode community API or even tarball download) to install this cookbook (and its dependency).
+* Find your favourite way ([Berkhelf](http://berkshelf.com/), [Librarian-Chef](https://github.com/applicationsonline/librarian#readme), Chef Supermarket API, Git submodule, or even tarball download) to install this cookbook (and its dependencies).
 * Include the `android-sdk::default` recipe to your run list or inside your cookbook.
 * Provision!
 

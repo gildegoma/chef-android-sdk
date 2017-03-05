@@ -30,6 +30,8 @@ android_bin      = File.join(android_home, 'tools', 'android')
 #
 # Install required libraries
 #
+include_recipe 'expect'
+include_recipe 'java' unless node['android-sdk']['java_from_system']
 include_recipe 'ark::default'
 
 if node['platform'] == 'ubuntu'
@@ -53,14 +55,12 @@ end
 #
 # Download and setup android-sdk tarball package
 #
-if linux?
-  sdk_url = node['android-sdk']['download_url']['linux']
-  sdk_checksum = node['android-sdk']['checksum']['linux']
-elsif mac_os_x?
+if platform_family?('mac_os_x')
   sdk_url = node['android-sdk']['download_url']['mac_os_x']
   sdk_checksum = node['android-sdk']['checksum']['mac_os_x']
 else
-  Chef::Log.error('Platform not supported!')
+  sdk_url = node['android-sdk']['download_url']['linux']
+  sdk_checksum = node['android-sdk']['checksum']['linux']
 end
 
 ark node['android-sdk']['name'] do
@@ -92,18 +92,7 @@ end
 #
 # Configure environment variables (ANDROID_HOME and PATH)
 #
-if linux?
-  template "/etc/profile.d/#{node['android-sdk']['name']}.sh" do
-    source 'android-sdk.sh.erb'
-    mode '0644'
-    owner node['android-sdk']['owner']
-    group node['android-sdk']['group']
-    variables(
-      android_home: android_home
-    )
-    only_if { node['android-sdk']['set_environment_variables'] }
-  end
-elsif mac_os_x?
+if platform_family?('mac_os_x')
   bash_profile 'profile.android_sdk' do
     user node['android-sdk']['owner']
     content <<-EOH
@@ -112,7 +101,14 @@ elsif mac_os_x?
     EOH
   end
 else
-  Chef::Log.error('Platform not supported!')
+  template "/etc/profile.d/#{node['android-sdk']['name']}.sh" do
+    source 'android-sdk.sh.erb'
+    mode '0644'
+    owner node['android-sdk']['owner']
+    group node['android-sdk']['group']
+    variables(android_home: android_home)
+    only_if { node['android-sdk']['set_environment_variables'] }
+  end
 end
 
 #

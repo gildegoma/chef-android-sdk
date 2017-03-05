@@ -2,6 +2,7 @@
 driver:
   name: vagrant
   gui: false
+  cache_directory: false
 
 provisioner:
   name: chef_zero
@@ -11,14 +12,14 @@ platforms:
   - name: ubuntu-12.04
     driver:
       customize:
-        memory: 384
+        memory: 512
     run_list:
       - recipe[apt]
 
   - name: ubuntu-14.04
     driver:
       customize:
-        memory: 384
+        memory: 512
     run_list:
       - recipe[apt]
 
@@ -35,9 +36,6 @@ platforms:
     driver:
       box: jhcook/osx-elcapitan-10.11
       boot_timeout: 1800
-      cache_directory: false
-      customize:
-        cpuexecutioncap: 80 # % max of total cpu power
 
   - name: windows-2012R2
     os_type: windows
@@ -86,8 +84,6 @@ suites:
   run_list:
     - recipe[android-sdk]
   attributes:
-    java:
-      jdk_version: 7
     android-sdk:
       version: '24.4'
       checksum:

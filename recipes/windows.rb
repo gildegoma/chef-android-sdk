@@ -23,6 +23,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+#
+# Install required libraries
+#
+
+include_recipe 'expect'
+include_recipe 'java' unless node['android-sdk']['java_from_system']
 include_recipe 'ark::default'
 
 setup_root       = node['android-sdk']['setup_root'].to_s.empty? ? node['ark']['prefix_home'] : node['android-sdk']['setup_root']

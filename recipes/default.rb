@@ -23,11 +23,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe 'chef-sugar::default'
-include_recipe 'java' unless node['android-sdk']['java_from_system']
-include_recipe 'expect'
-
-if windows?
+if platform_family?('windows')
   include_recipe 'android-sdk::windows'
 else
   include_recipe 'android-sdk::unix'

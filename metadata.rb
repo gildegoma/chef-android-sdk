@@ -5,7 +5,7 @@ issues_url 'https://github.com/gildegoma/chef-android-sdk/issues' if respond_to?
 source_url 'https://github.com/gildegoma/chef-android-sdk' if respond_to?(:source_url)
 license 'Apache 2.0'
 description 'Installs Google Android SDK'
-version '0.2.1'
+version '0.2.2'
 
 %w(java ark).each do |dep|
   depends dep

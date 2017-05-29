@@ -3,7 +3,6 @@ maintainer 'Gilles Cornu'
 maintainer_email 'foss@gilles.cornu.name'
 license 'Apache 2.0'
 description 'Installs Google Android SDK'
-
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 issues_url 'https://github.com/gildegoma/chef-android-sdk/issues'
 source_url 'https://github.com/gildegoma/chef-android-sdk'

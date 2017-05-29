@@ -7,4 +7,10 @@ AllCops:
     - 'vendor/**/*'
 
 Metrics/LineLength:
-  Max: 150
+  Max: 155
+
+Metrics/BlockLength:
+  Max: 30
+
+Layout/EndOfLine:
+  EnforcedStyle: lf

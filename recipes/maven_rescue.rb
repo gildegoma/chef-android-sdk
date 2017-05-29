@@ -10,7 +10,7 @@ maven_android_sdk_deployer_home = File.join(maven_android_sdk_deployer_root, nod
 directory maven_android_sdk_deployer_home do
   user node['android-sdk']['owner']
   group node['android-sdk']['group']
-  mode 00755
+  mode '0755'
   action :create
 end
 git maven_android_sdk_deployer_home do

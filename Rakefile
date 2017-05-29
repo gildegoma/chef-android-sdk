@@ -2,46 +2,26 @@
 
 require 'foodcritic'
 require 'rake/testtask'
-require 'tailor/rake_task'
 require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
 
 # TODO: add chefspec
-task default: [:tailor, :rubocop, :foodcritic, :knife]
+task default: %i[rubocop foodcritic knife serverspec]
 
 desc 'Lint Ruby code'
-task :tailor do
-  Tailor::RakeTask.new do |task|
-    task.file_set('attributes/**/*.rb', 'attributes') do |style|
-      style.max_line_length 160, level: :warn
-    end
-    # task.file_set('definitions/**/*.rb', "definitions")
-    # task.file_set('libraries/**/*.rb', "libraries")
-    task.file_set('metadata.rb', 'metadata') do |style|
-      style.max_line_length 80, level: :warn
-    end
-    # task.file_set('providers/**/*.rb', "providers")
-    task.file_set('recipes/**/*.rb', 'recipes') do |style|
-      style.max_line_length 160, level: :warn
-    end
-    # task.file_set('resources/**/*.rb', "resources")
-
-    # Template analysis is currently disabled,
-    # because I have no idea how 'ruby -c' could support ERB markers like '<%'
-    # task.file_set('templates/**/*.erb', "templates")
-
-    task.file_set('spec/**/*.rb', 'chefspec') do |style|
-      style.max_line_length 160, level: :warn
-    end
-  end
-end
-
 RuboCop::RakeTask.new
 
-# FoodCritic exceptions are defined in the .foodcritic file of this project
-FoodCritic::Rake::LintTask.new
+FoodCritic::Rake::LintTask.new do |t|
+  t.options = { fail_tags: ['any'], tags: ['~FC041', '~FC053'] }
+end
 
-RSpec::Core::RakeTask.new
+desc 'Run serverspec test'
+task :serverspec do
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.pattern = 'test/integration/default/serverspec/*_spec.rb'
+  end
+  Rake::Task['spec'].execute
+end
 
 desc 'Run knife cookbook test'
 task :knife do
@@ -51,7 +31,7 @@ task :knife do
 end
 
 task :prepare_sandbox do
-  files = %w(*.md *.rb attributes definitions files providers recipes resources templates)
+  files = %w[*.md *.rb attributes definitions files providers recipes resources templates]
 
   rm_rf sandbox_root
   mkdir_p sandbox_path
@@ -67,10 +47,10 @@ task :prepare_sandbox do
 
   # Add fake dependant cookbooks (put only the stuff chefspec will verify)
   # TODO: DRY: read 'depends' from metadata.rb...
-  cookbook_deps = %w(java ark)
+  cookbook_deps = %w[java ark]
   cookbook_deps.each do |dep|
     mkdir_p File.join(sandbox_cookbooks, dep, 'recipes')
-    touch File.join(sandbox_cookbooks, dep, %w(recipes default.rb))
+    touch File.join(sandbox_cookbooks, dep, %w[recipes default.rb])
     touch File.join(sandbox_cookbooks, dep, 'README.md')
   end
 end
@@ -89,7 +69,7 @@ def cookbook_name
 end
 
 def sandbox_root
-  File.join(File.dirname(__FILE__), %w(tmp))
+  File.join(File.dirname(__FILE__), %w[tmp])
 end
 
 def sandbox_cookbooks

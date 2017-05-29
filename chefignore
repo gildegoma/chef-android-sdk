@@ -1,0 +1,27 @@
+# IDE
+.idea
+
+# SCM
+.gitignore
+.git
+
+# Testing
+.vagrant
+.kitchen
+.kitchen.local.yml
+.kitchen.yml
+Rakefile
+test
+.travis.yml
+.rubocop.yml
+
+# Bundler
+Gemfile
+Gemfile.lock
+
+# Berkshelf
+Berksfile
+Berksfile.lock
+
+# Chef
+chefignore

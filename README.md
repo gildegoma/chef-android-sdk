@@ -7,14 +7,13 @@ The **default** recipe of this Chef cookbook will:
 
 * Download and install/upgrade Android SDK (not ADT)
 * Update SDK dependencies to install *some* Android platforms (`--filter` list can be customized in cookbook attributes)
-* Define a default `ANDROID_HOME` environment variable (via `/etc/profile.d/...` mechanism)
-* Add `ANDROID_HOME/tools` and `ANDROID_HOME/platform-tools` to default `PATH` environment variable (via `/etc/profile.d/...` mechanism)
+* Define a default `ANDROID_HOME` environment variable
+* Add `ANDROID_HOME/tools` and `ANDROID_HOME/platform-tools` to default `PATH` environment variable
 
 Requirements
 ------------
 
-* Chef 12.5+ (due to transitive cookbook dependencies, and to avoid a dependency on compat_resource cookbook)
-* Depends on **chef-cookbooks/ark** and **chef-cookbooks/java** cookbooks
+* Depends on **ark**, **java**, **homebrew**, **expect** and **bash** cookbooks
 * This cookbook currently supports Ubuntu 12.04+ and CentOS 6.6+, but more Linux distributions are welcome (depending on community interests). Support for MacOS and Windows is also on the [roadmap](https://github.com/gildegoma/chef-android-sdk/pull/33) thanks to @rjaros87.
 
 Attributes
@@ -36,15 +35,15 @@ Quality Assurance
 
 ### Continous Integration
 
-This Cookbook is being _tasted_ by Travis CI: [![Build Status](https://secure.travis-ci.org/gildegoma/chef-android-sdk.png?branch=master)](https://travis-ci.org/gildegoma/chef-android-sdk)
+This Cookbook is being _tested_ by Travis CI: [![Build Status](https://secure.travis-ci.org/gildegoma/chef-android-sdk.png?branch=master)](https://travis-ci.org/gildegoma/chef-android-sdk)
 
 Automated validations are following:
   * Static Analysis of Ruby code with [tailor](https://github.com/turboladen/tailor#readme) lint tool
   * Static Analysis of Chef Cookbooks with [foodcritic](http://acrmp.github.com/foodcritic/) lint tool
   * `knife cookbook test` in a very basic sandbox
   * _PENDING:_ Expectations described with RSpec examples with [ChefSpec](https://github.com/acrmp/chefspec)
-  * _PENDING:_ [ServerSpec](http://serverspec.org/) integration testing
-  * _PENDING:_ Run true chef (matrix) on travis VM!
+  * [ServerSpec](http://serverspec.org/) integration testing
+  * Run true chef (matrix) on travis VM with ServerSpec test
 
 ### Development and Testing
 

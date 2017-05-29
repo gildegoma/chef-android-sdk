@@ -1,14 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rake'
-gem 'tailor'
-gem 'chefspec', '~> 1.3.0'
-gem 'foodcritic', '>= 9.0.0'
-gem 'chef', '~> 11.14'
-gem 'rubocop'
+gem 'berkshelf', '~> 6.0'
+gem 'chef', '~> 13.0'
+gem 'foodcritic', '~> 11.1.0'
+gem 'rake', '~> 12.0'
+gem 'rubocop', '~> 0.49.0'
 
 group :integration do
-  gem 'berkshelf', '~> 3.3.0'
-  gem 'test-kitchen', '~> 1.4.2'
-  gem 'kitchen-vagrant', '~> 0.19.0'
+  gem 'kitchen-vagrant', '~> 1.1'
+  gem 'test-kitchen', '~> 1.16'
+  gem 'winrm-elevated', '~> 1.1'
 end

@@ -100,7 +100,7 @@ template "/etc/profile.d/#{node['android-sdk']['name']}.sh" do
   only_if { node['android-sdk']['set_environment_variables'] }
 end
 
-package 'expect'
+package 'expect' unless node['android-sdk']['expect_from_system']
 
 #
 # Install, Update (a.k.a. re-install) Android components

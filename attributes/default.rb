@@ -38,4 +38,6 @@ default['android-sdk']['scripts']['group']          = node['android-sdk']['group
 
 default['android-sdk']['java_from_system']          = false
 
+default['android-sdk']['expect_from_system']        = false
+
 default['android-sdk']['maven-rescue']              = false

@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf', '~> 5.6', '>= 5.6.3'
-gem 'chef', '~> 12.18'
-gem 'foodcritic', '~> 9.0'
+gem 'berkshelf', '~> 6.0'
+gem 'chef', '~> 13.0'
+gem 'foodcritic', '~> 11.1.0'
 gem 'rake', '~> 12.0'
-gem 'rubocop', '~> 0.47.1'
+gem 'rubocop', '~> 0.49.0'
 
 group :integration do
-  gem 'kitchen-vagrant', '~> 1.0'
-  gem 'test-kitchen', '~> 1.15'
+  gem 'kitchen-vagrant', '~> 1.1'
+  gem 'test-kitchen', '~> 1.16'
 end

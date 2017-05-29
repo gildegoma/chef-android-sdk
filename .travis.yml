@@ -4,16 +4,15 @@ os:
 language: ruby
 dist: trusty
 rvm:
-  - 2.3
+  - 2.3.4
 env:
   - BERKSHELF_PATH=/tmp/
-before_install:
+install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - curl -L https://www.chef.io/chef/install.sh | sudo bash
-  - rvm use ruby-2.3@my_project_gemset --create
+  - rvm use ruby-2.3.4@my_project_gemset --create
   - gem install bundler
-install:
   - bundle install --without integration
   - bundle exec berks vendor /tmp/cookbooks
   - cp test/support/dummy-validation.pem /tmp/validation.pem
@@ -23,7 +22,7 @@ script:
   - rvm reset # To use the embedded ruby in chef-client
   - sudo chef-client -z -c /tmp/client.rb -j /tmp/dna.json # Run chef in zero mode
   - '[ -f ~/.bash_profile ] && source ~/.bash_profile || source ~/.profile && source /etc/profile' # Apply new env vars
-  - rvm use ruby-2.3@my_project_gemset # To use the rvm ruby and custom gems
+  - rvm use ruby-2.3.4@my_project_gemset # To use the rvm ruby and custom gems
   - bundle exec rake # Test all
 after_script:
   - rvm --force gemset delete my_project_gemset

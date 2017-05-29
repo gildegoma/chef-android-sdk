@@ -6,7 +6,7 @@ require 'rubocop/rake_task'
 require 'rspec/core/rake_task'
 
 # TODO: add chefspec
-task default: [:rubocop, :foodcritic, :knife, :serverspec]
+task default: %i[rubocop foodcritic knife serverspec]
 
 desc 'Lint Ruby code'
 RuboCop::RakeTask.new
@@ -31,7 +31,7 @@ task :knife do
 end
 
 task :prepare_sandbox do
-  files = %w(*.md *.rb attributes definitions files providers recipes resources templates)
+  files = %w[*.md *.rb attributes definitions files providers recipes resources templates]
 
   rm_rf sandbox_root
   mkdir_p sandbox_path
@@ -47,10 +47,10 @@ task :prepare_sandbox do
 
   # Add fake dependant cookbooks (put only the stuff chefspec will verify)
   # TODO: DRY: read 'depends' from metadata.rb...
-  cookbook_deps = %w(java ark)
+  cookbook_deps = %w[java ark]
   cookbook_deps.each do |dep|
     mkdir_p File.join(sandbox_cookbooks, dep, 'recipes')
-    touch File.join(sandbox_cookbooks, dep, %w(recipes default.rb))
+    touch File.join(sandbox_cookbooks, dep, %w[recipes default.rb])
     touch File.join(sandbox_cookbooks, dep, 'README.md')
   end
 end
@@ -69,7 +69,7 @@ def cookbook_name
 end
 
 def sandbox_root
-  File.join(File.dirname(__FILE__), %w(tmp))
+  File.join(File.dirname(__FILE__), %w[tmp])
 end
 
 def sandbox_cookbooks

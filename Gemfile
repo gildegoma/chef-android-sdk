@@ -9,4 +9,5 @@ gem 'rubocop', '~> 0.49.0'
 group :integration do
   gem 'kitchen-vagrant', '~> 1.1'
   gem 'test-kitchen', '~> 1.16'
+  gem 'winrm-elevated', '~> 1.1'
 end

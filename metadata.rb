@@ -1,12 +1,14 @@
 name 'android-sdk'
+
 maintainer 'Gilles Cornu'
 maintainer_email 'foss@gilles.cornu.name'
-license 'Apache 2.0'
+license 'Apache-2.0'
 description 'Installs Google Android SDK'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 issues_url 'https://github.com/gildegoma/chef-android-sdk/issues'
 source_url 'https://github.com/gildegoma/chef-android-sdk'
 version '0.3.0'
+chef_version '>= 12.18'
 
 depends 'java', '~> 1.42'
 depends 'ark', '>= 1.1.0'

@@ -26,15 +26,15 @@ default['android-sdk']['download_url']['windows']   = "https://dl.google.com/and
 # without having to adapt 'version' and 'checksum' attributes of this cookbook.
 # Note that it will require (waste) some extra download effort.
 #
-default['android-sdk']['components']                  = %w( platform-tools
+default['android-sdk']['components']                  = %w[ platform-tools
                                                             build-tools-25.0.2
                                                             android-25
                                                             extra-android-support
                                                             extra-google-google_play_services
                                                             extra-google-m2repository
-                                                            extra-android-m2repository )
+                                                            extra-android-m2repository ]
 
-default['android-sdk']['license']['white_list']       = %w(.+)
+default['android-sdk']['license']['white_list']       = %w[.+]
 default['android-sdk']['license']['black_list']       = []    # e.g. ['intel-.+', 'mips-.+', 'android-wear-sdk-license-.+']
 default['android-sdk']['license']['default_answer']   = 'n'   # 'y' or 'n' ('yes' or 'no')
 

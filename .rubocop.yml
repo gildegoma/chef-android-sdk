@@ -11,3 +11,6 @@ Metrics/LineLength:
 
 Metrics/BlockLength:
   Max: 30
+
+Layout/EndOfLine:
+  EnforcedStyle: lf

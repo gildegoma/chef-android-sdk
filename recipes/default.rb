@@ -27,7 +27,8 @@ include_recipe 'java' unless node['android-sdk']['java_from_system']
 
 setup_root       = node['android-sdk']['setup_root'].to_s.empty? ? node['ark']['prefix_home'] : node['android-sdk']['setup_root']
 android_home     = File.join(setup_root, node['android-sdk']['name'])
-android_bin      = File.join(android_home, 'tools', 'android')
+android_tools    = 'tools'
+android_bin      = File.join(android_home, android_tools, 'android')
 
 #
 # Install required libraries
@@ -55,7 +56,7 @@ end
 #
 ark node['android-sdk']['name'] do
   url node['android-sdk']['download_url']
-  path node['android-sdk']['setup_root']
+  path node['android-sdk']['setup_root'] || android_tools
   checksum node['android-sdk']['checksum']
   version node['android-sdk']['version']
   prefix_root node['android-sdk']['setup_root']
